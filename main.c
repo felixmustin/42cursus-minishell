@@ -1,4 +1,4 @@
-#include "main.h"
+#include "minishell.h"
 
 /*void init_term(void)
 {

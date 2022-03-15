@@ -51,9 +51,10 @@ void	env_builtin(void);
 void	pwd_builtin(void);
 void	echo_builtin(char *str, int option);
 char	*new_prompt(void);
-char	*parsing(char *input);
+int		parsing(t_list *lst);
 t_list	*newlst(t_token *token);
 void	add_back(t_list **lst, t_list *new);
+t_token	*create_token(void *content, t_token_type type);
 
 
 #endif
