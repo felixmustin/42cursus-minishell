@@ -1,4 +1,4 @@
-#include "main.h"
+#include "minishell.h"
 
 int env_len(char **envv)
 {

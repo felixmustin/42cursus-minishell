@@ -1,4 +1,4 @@
-#include "main.h"
+#include "minishell.h"
 
 char *parse_cwd(char *cwd)
 {

@@ -37,7 +37,7 @@ int main(int argc, char **argv, char **envv)
             add_history(input);
         token(input, &lst);
         parsing(&all_cmd, lst);
-        execute(all_cmd);
+        execute(&all_cmd);
         free(input);
     }
     free(cwd);

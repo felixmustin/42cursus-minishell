@@ -62,9 +62,9 @@ typedef struct s_cmd
 
 typedef struct s_all_cmd
 {
-    int type; //0:| 1: && 2: || 
     struct s_cmd *cmds;
-    int nbrcmd;   
+    int nbrcmd;
+    int is_pipe;
     int pipe[2];
 
 } t_all_cmd;
@@ -77,10 +77,11 @@ void	env_builtin(void);
 void	pwd_builtin(void);
 void	echo_builtin(char *str, int option);
 char	*new_prompt(void);
-int		parsing(t_list *lst);
+int		parsing(t_all_cmd *all_cmd, t_list *lst);
 t_list	*newlst(t_token *token);
 void	add_back(t_list **lst, t_list *new);
 t_token	*create_token(void *content, t_token_type type);
+void init_struct(t_cmd *cmd);
 
 
 #endif
