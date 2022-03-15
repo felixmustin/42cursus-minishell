@@ -23,6 +23,8 @@ void signal_handler(int sign)
 
 int main(int argc, char **argv, char **envv)
 {
+    t_all_cmd all_cmd;
+    t_list *lst;
     char *input;
     char *cwd;
 
@@ -33,8 +35,9 @@ int main(int argc, char **argv, char **envv)
     {
         if (ft_strlen(input) > 0)
             add_history(input);
-        //parsing(input);
-        //execute();
+        token(input, &lst);
+        parsing(&all_cmd, lst);
+        execute(all_cmd);
         free(input);
     }
     free(cwd);

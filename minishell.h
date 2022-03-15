@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef MINISHELL_H
+#define MINISHELL_H
 
 #include <stdio.h>
 #include <unistd.h>
@@ -42,6 +42,32 @@ typedef struct s_list
 	t_token			*token;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_cmd
+{
+    int     type; //0:exec 1:echo 2:pwd ...
+    char    **cmd; //if type=0
+    //char    **args;
+	int     fd_i;
+    int     fd_o;
+    int     pipe_i;
+    int     pipe_o;
+    int     and_o;
+    int     and_i;
+    int     or_o;
+    int     or_i;
+
+} t_cmd;
+
+
+typedef struct s_all_cmd
+{
+    int type; //0:| 1: && 2: || 
+    struct s_cmd *cmds;
+    int nbrcmd;   
+    int pipe[2];
+
+} t_all_cmd;
 
 char **env;
 
