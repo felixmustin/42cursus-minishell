@@ -47,16 +47,11 @@ typedef struct s_cmd
 {
     int     type; //0:exec 1:echo 2:pwd ...
     char    **cmd; //if type=0
-    //char    **args;
 	int     fd_i;
     int     fd_o;
-    int     pipe_i;
+    int     pipe_i; //0: no 1: yes
     int     pipe_o;
-    int     and_o;
-    int     and_i;
-    int     or_o;
-    int     or_i;
-
+    int     type_pipe //0: no pipe 1: | 2: && 3: ||
 } t_cmd;
 
 
@@ -65,7 +60,7 @@ typedef struct s_all_cmd
     struct s_cmd *cmds;
     int nbrcmd;
     int is_pipe;
-    int pipe[2];
+    int pipefd[2];
 
 } t_all_cmd;
 
@@ -82,6 +77,9 @@ t_list	*newlst(t_token *token);
 void	add_back(t_list **lst, t_list *new);
 t_token	*create_token(void *content, t_token_type type);
 void init_struct(t_cmd *cmd);
+
+void handle_pipe(t_cmd *cmd, int pipefd[2]);
+void handle_redir(t_cmd *cmd);
 
 
 #endif
