@@ -2,10 +2,9 @@
 
 void init_struct(t_cmd *cmd)
 {
+    cmd->fd_i = 0;
+    cmd->fd_o = 1;
     cmd->pipe_i = 0;
     cmd->pipe_o = 0;
-    cmd->and_i = 0;
-    cmd->and_o = 0;
-    cmd->or_i = 0;
-    cmd->or_o = 0;
+    cmd->type_pipe = 0;
 }

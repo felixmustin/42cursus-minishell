@@ -1,7 +1,5 @@
 #include "../minishell.h"
 
-void	check_builtins(t_list *lst)
-{}
 
 struct s_cmd parse_cmds(t_list *lst)
 {
@@ -12,13 +10,13 @@ struct s_cmd parse_cmds(t_list *lst)
     {
         if (lst->token->type == literal)
             full_cmd.cmd = create_cmd(lst->token);
-        else if (lst->token->type = simple_redir_right)
+        else if (lst->token->type == simple_redir_right)
             full_cmd.fd_o = get_redir(lst->token);
-        else if (lst->token->type = simple_redir_left)
+        else if (lst->token->type == simple_redir_left)
             full_cmd.fd_i = get_redir(lst->token);
-        else if (lst->token->type = double_redir_right)
+        else if (lst->token->type == double_redir_right)
             full_cmd.fd_o = get_redir(lst->token);
-        else if (lst->token->type = double_redir_left)
+        else if (lst->token->type == double_redir_left)
             full_cmd.fd_i = get_redir(lst->token);
         else if (lst->token->type == (pipeline || and || or))
             return(get_pipe_or_op(lst->token)); //function set int in struct
