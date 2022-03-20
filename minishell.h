@@ -6,8 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
-#include <curses.h>
-#include <term.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft/libft.h"
@@ -45,13 +46,13 @@ typedef struct s_list
 
 typedef struct s_cmd
 {
-    int     type; //0:exec 1:echo 2:pwd ...
-    char    **cmd; //if type=0
+    int     type; //0:exec  1-7:builtins
+    char    **cmd; //even with builtin (for args)
 	int     fd_i;
     int     fd_o;
-    int     pipe_i; //0: no 1: yes
+    int     pipe_i; //0:no  1:yes
     int     pipe_o;
-    int     type_pipe //0: no pipe 1: | 2: && 3: ||
+    int     type_pipe; //0:no pipe  1:|  2:&&  3:||
 } t_cmd;
 
 
@@ -59,8 +60,7 @@ typedef struct s_all_cmd
 {
     struct s_cmd *cmds;
     int nbrcmd;
-    int is_pipe;
-    int pipefd[2];
+    int **pipefd;
 
 } t_all_cmd;
 
@@ -78,8 +78,9 @@ void	add_back(t_list **lst, t_list *new);
 t_token	*create_token(void *content, t_token_type type);
 void init_struct(t_cmd *cmd);
 
-void handle_pipe(t_cmd *cmd, int pipefd[2]);
-void handle_redir(t_cmd *cmd);
+int execute(t_all_cmd *all_cmd);
+void handle_pipe(t_all_cmd *all_cmd, int *pipefd, int i);
+void handle_redir(t_all_cmd *all_cmd, int i);
 
 
 #endif
