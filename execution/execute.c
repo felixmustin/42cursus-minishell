@@ -2,48 +2,64 @@
 
 void execute_builtin(t_cmd *cmd)
 {
-    handle_redir(cmd);
-
+    if (cmd->type == 1)
+        ex_echo(cmd);
+    if (cmd->type == 2)
+        ex_cd(cmd);
+    if (cmd->type == 3)
+        ex_pwd();
+    /*if (cmd->type == 4)
+        ex_export();
+    if (cmd->type == 5)
+        ex_unset();*/
+    if (cmd->type == 6)
+        ex_env();
+    /*if (cmd->type == 7)
+        ex_exit();*/
+    exit(0);
 }
 
-int execute_child_cmd(t_cmd *cmd)
+void execute_child_cmd(t_all_cmd *all_cmd, int i)
 {
-    int status;
-
-    handle_redir(cmd);
-    if (cmd->cmd)
-        execve(cmd->cmd[0], cmd->cmd, env);
-    perror("execve");
+    handle_pipe(all_cmd, i);
+    handle_redir(all_cmd, i);
+    close_pipes(all_cmd);
+    if (all_cmd->cmds[i].type > 0)
+        execute_builtin(&all_cmd->cmds[i]);
+    if (all_cmd->cmds[i].type == 0)
+        execve(all_cmd->cmds[i].cmd[0], all_cmd->cmds[i].cmd, env);
+    perror("exec");
 }
 
-void execute_cmd(t_cmd *cmd)
+pid_t execute_cmd(t_all_cmd *all_cmd, int i)
 {
     pid_t cmd_pid;
 
     cmd_pid = fork();
     if (cmd_pid == -1)
-        return (perror("fork"));
+        return (0);
     if (!cmd_pid)
-        execute_child_cmd(cmd);
-
+        execute_child_cmd(all_cmd, i);
+    return (cmd_pid);
 }
 
-int execute(t_all_cmd *all_cmd)
+void execute(t_all_cmd *all_cmd)
 {
+    pid_t cmd_pid;
+    int pid, status;
     int i;
-    int ret;
 
-    if (all_cmd->is_pipe)
-        pipe(all_cmd->pipefd);
-    i= 0;
-    while(i < all_cmd->nbrcmd)
+    if (all_cmd->nbrcmd > 1)
+        all_cmd->pipefd = init_pipes(all_cmd->nbrcmd - 1);
+    i = -1;
+    while(++i < all_cmd->nbrcmd)
     {
-        handle_pipe(&all_cmd->cmds[i], all_cmd->pipefd);
-        if (all_cmd->cmds->type > 0)
-            execute_builtin(&all_cmd->cmds[i]);
-        else if (all_cmd->cmds->type == 0)
-            execute_cmd(&all_cmd->cmds[i]);
-        i++;
-        //...
+        cmd_pid = execute_cmd(all_cmd, i);
     }
+    close_pipes(all_cmd);
+    /*while ((pid = wait(&status)) != -1)	//pick up all the dead children
+		fprintf(stderr, "process %d exits with %d\n", pid, WEXITSTATUS(status));*/
+    waitpid(-1, &status, 0);
+    waitpid(cmd_pid, &status, 0);
+	//free(all_cmd->pipefd);
 }
