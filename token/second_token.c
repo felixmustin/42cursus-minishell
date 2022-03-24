@@ -92,15 +92,7 @@ int	second_token(t_list **lst)
 	i = 0;
 	new = NULL;
 	while (*lst)
-	{
-		/*if (i == 0)
-			i = set_second_token(lst, &new);
-		if (i > 0)
-			i--;*/
 		set_second_token(lst, &new);
-		//if (*lst)
-		//	*lst = (*lst)->next;
-	}
 	//free lst
 	*lst = first_lst(new);
 	return (1);

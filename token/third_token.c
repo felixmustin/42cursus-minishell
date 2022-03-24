@@ -119,9 +119,7 @@ int third_token(t_list **lst)
 
 	new = NULL;
 	while (*lst)
-	{
 		set_third_token(lst, &new);
-	}
 	//free lst
 	*lst = first_lst(new);
 	return (1);

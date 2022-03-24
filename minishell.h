@@ -42,6 +42,7 @@ typedef struct s_list
 {
 	t_token			*token;
 	struct s_list	*next;
+    struct s_list   *prev;
 }	t_list;
 
 typedef struct s_cmd
@@ -78,6 +79,8 @@ void	add_back(t_list **lst, t_list *new);
 t_token	*create_token(char *content, t_token_type type);
 void init_struct(t_cmd *cmd);
 int	check_quotes(t_list *lst);
+int	check_operator(t_list *lst);
+t_list	*first_lst(t_list *lst);
 
 int execute(t_all_cmd *all_cmd);
 void handle_pipe(t_all_cmd *all_cmd, int *pipefd, int i);

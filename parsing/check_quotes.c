@@ -1,41 +1,5 @@
 #include "../minishell.h"
 
-/*int	check_second_quotes(char *str, int i, int nbr)
-{
-	int	j;
-
-	j = i + 1;
-	while (str[j] != '\0')
-	{
-		if (str[j] == nbr)
-			return (1);
-		j++;
-	}
-	return (0);
-}
-
-int	check_quotes(t_list *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst)
-	{
-		if (lst->token->type == literal)
-		{
-			while (lst->token->content[i] != '\0')
-			{
-				if (lst->token->content[i] == 47)
-					if (!check_second_quotes(lst->token->content, i, 47))
-						return (0);
-				if (lst->token->content[i] == 42)
-					if (!check_second_quotes(lst->token->content, i, 47))
-						return (0);
-			}
-		}
-	}
-}*/
-
 int	check_occurence(char *str, int i, int j)
 {
 	while (j > i)
