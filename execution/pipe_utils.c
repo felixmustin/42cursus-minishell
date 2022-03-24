@@ -26,3 +26,13 @@ void	close_pipes(t_all_cmd *all_cmd)
         close(all_cmd->pipefd[i][1]);
 	}
 }
+
+void free_pipe(t_all_cmd *all_cmd)
+{
+    int i;
+
+    i = 0;
+    while (i < all_cmd->nbrcmd - 1)
+        free(all_cmd->pipefd[i]);
+    free(all_cmd->pipefd);
+}
