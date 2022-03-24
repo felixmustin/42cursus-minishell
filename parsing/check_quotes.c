@@ -41,10 +41,10 @@ int	check_occurence(char *str, int i, int j)
 	while (j > i)
 	{
 		if (str[i] == str[j])
-			return (j);
+			return (-1);
 		j--;
 	}
-	return (-1);
+	return (j);
 }
 
 int	check_str(char	*str)
@@ -56,14 +56,17 @@ int	check_str(char	*str)
 	j = ft_strlen(str);
 	while (str[i] != '\0')
 	{
-		if (str[i] == 42 || str[i] == 47)
+		if (j > i && (str[i] == 42 || str[i] == 47))
 		{
 			j = check_occurence(str, i , j);
 			if (j = -1)
 				return (0);
+			else
+				j--;
 		}
 		i++;
 	}
+	return (0);
 }
 
 int	check_quotes(t_list *lst)
