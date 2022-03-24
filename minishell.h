@@ -89,7 +89,7 @@ void handle_redir(t_cmd *cmd);
 void ex_echo(t_cmd *cmd);
 void ex_cd(t_cmd *cmd);
 void ex_pwd(void);
-void display_exp_env(void);
+void ex_export(t_cmd *cmd);
 void ex_unset(t_cmd *cmd);
 void ex_env(void);
 
