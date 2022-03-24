@@ -68,10 +68,8 @@ typedef struct s_all_cmd
 char **env;
 
 void	init_env(char **envv);
-void	free_env(void);
-void	env_builtin(void);
-void	pwd_builtin(void);
-void	echo_builtin(char *str, int option);
+void	free_env(char **envv);
+
 char	*new_prompt(void);
 int		set_cmd(t_all_cmd *all_cmd, t_list *lst);
 t_list	*newlst(t_token *token);
@@ -82,9 +80,17 @@ int	check_quotes(t_list *lst);
 int	check_operator(t_list *lst);
 t_list	*first_lst(t_list *lst);
 
-int execute(t_all_cmd *all_cmd);
-void handle_pipe(t_all_cmd *all_cmd, int *pipefd, int i);
-void handle_redir(t_all_cmd *all_cmd, int i);
+//execution
+void execute(t_all_cmd *all_cmd);
+void handle_pipe(t_all_cmd *all_cmd, int i);
+void handle_redir(t_cmd *cmd);
 
+//builtins
+void ex_echo(t_cmd *cmd);
+void ex_cd(t_cmd *cmd);
+void ex_pwd(void);
+void display_exp_env(void);
+void ex_unset(t_cmd *cmd);
+void ex_env(void);
 
 #endif
