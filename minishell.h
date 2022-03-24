@@ -33,7 +33,7 @@ typedef enum s_token_type
 
 typedef struct s_token
 {
-    char			content;
+    char			*content;
     t_token_type	type;
 
 } t_token;
@@ -72,11 +72,12 @@ void	env_builtin(void);
 void	pwd_builtin(void);
 void	echo_builtin(char *str, int option);
 char	*new_prompt(void);
-int		parsing(t_all_cmd *all_cmd, t_list *lst);
+int		set_cmd(t_all_cmd *all_cmd, t_list *lst);
 t_list	*newlst(t_token *token);
 void	add_back(t_list **lst, t_list *new);
-t_token	*create_token(void *content, t_token_type type);
+t_token	*create_token(char *content, t_token_type type);
 void init_struct(t_cmd *cmd);
+int	check_quotes(t_list *lst);
 
 int execute(t_all_cmd *all_cmd);
 void handle_pipe(t_all_cmd *all_cmd, int *pipefd, int i);
