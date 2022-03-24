@@ -10,19 +10,21 @@ int env_len(char **envv)
     return (i);
 }
 
-void free_env(void)
+void free_env(char **envv)
 {
     int i;
     int j;
 
     j = 0;
-    i = env_len(env);
+    i = env_len(envv);
     while(j < i)
     {
-        free(env[j]);
+        free(envv[j]);
+        envv[j] = NULL;
         j++;
     }
-    free(env);
+    free(envv);
+    envv = NULL;
 }
 
 void init_env(char **envv)
