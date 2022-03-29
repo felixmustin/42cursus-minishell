@@ -2,7 +2,7 @@
 
 void execute_builtin(t_cmd *cmd)
 {
-    if (cmd->type_pipe == 0)
+    if (cmd->pipe_i == 0 && cmd->pipe_o == 0)
         handle_redir(cmd);
     if (cmd->type == 1)
         ex_echo(cmd);
@@ -18,7 +18,7 @@ void execute_builtin(t_cmd *cmd)
         ex_env();
     else if (cmd->type == 7)
         exit(0);
-    if (cmd->type_pipe > 0)
+    if (cmd->pipe_i > 0 || cmd->pipe_o > 0)
         exit(0);
 }
 
@@ -55,7 +55,7 @@ void execute(t_all_cmd *all_cmd)
     int i;
     
     if (all_cmd->nbrcmd > 1)
-        all_cmd->pipefd = init_pipes(all_cmd->nbrcmd - 1);
+        init_pipes(all_cmd);
     else if (all_cmd->nbrcmd == 1 && all_cmd->cmds[0].type > 0)
     {
         execute_builtin(&all_cmd->cmds[0]);
@@ -65,9 +65,7 @@ void execute(t_all_cmd *all_cmd)
     while(++i < all_cmd->nbrcmd)
         cmd_pid = execute_cmd(all_cmd, i);
     close_pipes(all_cmd);
-    /*while ((pid = wait(&status)) != -1)	//pick up all the dead children
-		fprintf(stderr, "process %d exits with %d\n", pid, WEXITSTATUS(status));*/
+    //free_pipe(all_cmd);
     waitpid(-1, &status, 0);
     waitpid(cmd_pid, &status, 0);
-	//free_pipe(all_cmd);
 }
