@@ -12,7 +12,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft/libft.h"
-#include "get_next_line/get_next_line_bonus.h"
+#include "get_next_line/get_next_line.h"
 
 typedef enum s_token_type
 {
@@ -48,12 +48,11 @@ typedef struct s_list
 typedef struct s_cmd
 {
     int     type; //0:exec  1-7:builtins
-    char    **cmd; //even with builtin (for args)
+    char    **cmd;
 	int     fd_i;
     int     fd_o;
-    int     pipe_i; //0:no  1:yes
-    int     pipe_o;
-    int     type_pipe; //0:no pipe  1:|  2:&&  3:||
+    int     pipe_i; //0:no  1: | 2:&&  3:||
+    int     pipe_o; //0:no  1: | 2:&&  3:||
 } t_cmd;
 
 
@@ -79,6 +78,17 @@ void init_struct(t_cmd *cmd);
 int	check_quotes(t_list *lst);
 int	check_operator(t_list *lst);
 t_list	*first_lst(t_list *lst);
+
+//parse_redir
+int get_redir_l(t_token *token);
+int get_redir_dl(t_token *token);
+int get_redir_r(t_token *token);
+int get_redir_dr(t_token *token);
+
+//pipe
+void init_pipes(t_all_cmd *all_cmd);
+void close_pipes(t_all_cmd *all_cmd);
+void free_pipe(t_all_cmd *all_cmd);
 
 //execution
 void execute(t_all_cmd *all_cmd);
