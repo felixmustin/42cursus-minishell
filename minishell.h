@@ -78,6 +78,8 @@ void init_struct(t_cmd *cmd);
 int	check_quotes(t_list *lst);
 int	check_operator(t_list *lst);
 t_list	*first_lst(t_list *lst);
+int	parse_command(t_list *lst);
+int set_cmd(t_all_cmd *all_cmd, t_list *lst);
 
 //parse_redir
 int get_redir_l(t_token *token);

@@ -11,6 +11,14 @@ struct s_cmd get_pipe(t_cmd cmd, t_token *token)
     return (cmd);
 }
 
+char	**create_cmd(char *str)
+{
+	char	**new;
+
+	new = ft_split(str, 32);
+	return (new);
+}
+
 struct s_cmd parse_cmds(t_list *lst, int i)
 {
     t_cmd full_cmd;
@@ -52,7 +60,7 @@ int interpreter(t_list *lst, t_all_cmd *all_cmd)
     }
 }
 
-int parsing (t_all_cmd *all_cmd, t_list *lst)
+int set_cmd(t_all_cmd *all_cmd, t_list *lst)
 {
     all_cmd->nbrcmd = count_cmd(lst);
     //check_cmd(lst);
