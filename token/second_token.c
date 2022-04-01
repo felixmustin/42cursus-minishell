@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-char	*new_content(t_list **lst)
+char	*new_content(t_lists **lst)
 {
 	t_token_type	type;
 	char			*content;
@@ -26,7 +26,7 @@ char	*new_content(t_list **lst)
 	return (content);
 }
 
-char	*new_content_varaible(t_list **lst)
+char	*new_content_varaible(t_lists **lst)
 {
 	t_token_type	type;
 	char			*content;
@@ -65,11 +65,11 @@ t_token_type	check_double(char *content, t_token_type type)
 	return (type);
 }
 
-int	set_second_token(t_list **lst, t_list **newlist)
+int	set_second_token(t_lists **lst, t_lists **newlist)
 {
 	char			*content;
 	t_token			*token;
-	t_list			*new;
+	t_lists			*new;
 	t_token_type	type;
 
 	type = (*lst)->token->type;
@@ -84,9 +84,9 @@ int	set_second_token(t_list **lst, t_list **newlist)
 	return (1);
 }
 
-int	second_token(t_list **lst)
+int	second_token(t_lists **lst)
 {
-	t_list	*new;
+	t_lists	*new;
 	int		i;
 
 	i = 0;

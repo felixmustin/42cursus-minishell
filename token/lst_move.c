@@ -1,10 +1,10 @@
-#include "minishell.h"
+#include "../minishell.h"
 
-t_list	*newlst(t_token *token)
+t_lists	*newlst(t_token *token)
 {
-	t_list	*new;
+	t_lists	*new;
 
-	new = malloc(sizeof(t_list));
+	new = malloc(sizeof(t_lists));
 	if (!new)
 		return (NULL);
 	new->token = token;
@@ -13,7 +13,7 @@ t_list	*newlst(t_token *token)
 	return (new);
 }
 
-t_list	*last_lst(t_list *lst)
+t_lists	*last_lst(t_lists *lst)
 {
 	while (lst)
 	{
@@ -24,7 +24,7 @@ t_list	*last_lst(t_list *lst)
 	return (lst);
 }
 
-t_list	*first_lst(t_list *lst)
+t_lists	*first_lst(t_lists *lst)
 {
 	while (lst)
 	{
@@ -35,9 +35,9 @@ t_list	*first_lst(t_list *lst)
 	return (lst);
 }
 
-void	add_back(t_list **lst, t_list *new)
+void	add_back(t_lists **lst, t_lists *new)
 {
-	t_list	*last;
+	t_lists	*last;
 
 	if (*lst)
 	{

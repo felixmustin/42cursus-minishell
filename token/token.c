@@ -48,10 +48,10 @@ t_token	*create_token(char *content, t_token_type type)
 	return (token);
 }
 
-int	set_token(char c, t_list **lst)
+int	set_token(char c, t_lists **lst)
 {
 	char			*content;
-	t_list			*new;
+	t_lists			*new;
 	t_token			*token;
 	t_token_type	type;
 
@@ -67,7 +67,7 @@ int	set_token(char c, t_list **lst)
 	return (1);
 }
 
-int	token(char *input, t_list **lst)
+int	token(char *input, t_lists **lst)
 {
 	int	i;
 

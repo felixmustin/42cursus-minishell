@@ -19,7 +19,7 @@ char	**create_cmd(char *str)
 	return (new);
 }
 
-struct s_cmd parse_cmds(t_list *lst, int i)
+struct s_cmd parse_cmds(t_lists *lst, int i)
 {
     t_cmd full_cmd;
 
@@ -27,7 +27,7 @@ struct s_cmd parse_cmds(t_list *lst, int i)
     while(lst)
     {
         if (lst->token->type == literal)
-            full_cmd.cmd = create_cmd(lst->token);
+            full_cmd.cmd = create_cmd(lst->token->content);
         else if (lst->token->type == simple_redir_right)
             full_cmd.fd_o = get_redir_r(lst->token);
         else if (lst->token->type == simple_redir_left)
@@ -43,7 +43,7 @@ struct s_cmd parse_cmds(t_list *lst, int i)
     return (full_cmd);
 }
 
-int interpreter(t_list *lst, t_all_cmd *all_cmd)
+int interpreter(t_lists *lst, t_all_cmd *all_cmd)
 {
     int i;
 
@@ -58,12 +58,29 @@ int interpreter(t_list *lst, t_all_cmd *all_cmd)
             all_cmd->cmds[i].pipe_i = all_cmd->cmds[i - 1].pipe_o;
         i++;
     }
+    return (1);
 }
 
-int set_cmd(t_all_cmd *all_cmd, t_list *lst)
+int count_cmd(t_lists *lst)
+{
+    int i;
+
+    i = 0;
+    while(lst)
+    {
+        if (lst->token->type == literal)
+            i++;
+        lst = lst->next;
+    }
+    return (i);
+}
+
+int set_cmd(t_all_cmd *all_cmd, t_lists *lst)
 {
     all_cmd->nbrcmd = count_cmd(lst);
     //check_cmd(lst);
     //expand_var(lst);
-    interpreter(lst, all_cmd);
+    if (interpreter(lst, all_cmd))
+        return (1);
+    return (0);
 }

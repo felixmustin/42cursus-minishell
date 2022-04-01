@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-char	*new_content_literal(t_list **lst, t_token_type type)
+char	*new_content_literal(t_lists **lst, t_token_type type)
 {
 	char			*content;
 	char			*tpm;
@@ -24,7 +24,7 @@ char	*new_content_literal(t_list **lst, t_token_type type)
 	return (content);
 }
 
-char	*new_content_redir(t_list **lst)
+char	*new_content_redir(t_lists **lst)
 {
 	char	*content;
 	char	*tpm;
@@ -52,7 +52,7 @@ char	*new_content_redir(t_list **lst)
 	return (content);
 }
 
-char	*neww_content(t_list **lst, t_token_type type)
+char	*neww_content(t_lists **lst, t_token_type type)
 {
 	char	*content;
 	char	*tpm;
@@ -76,12 +76,12 @@ char	*neww_content(t_list **lst, t_token_type type)
 	return (content);
 }
 
-int	set_third_token(t_list **lst, t_list **newlist)
+int	set_third_token(t_lists **lst, t_lists **newlist)
 {
 	char			*content;
 	t_token			*token;
 	t_token_type	type;
-	t_list			*new;
+	t_lists			*new;
 
 	type = (*lst)->token->type;
 	if (type != space)
@@ -113,9 +113,9 @@ int	set_third_token(t_list **lst, t_list **newlist)
 	return (1);
 }
 
-int third_token(t_list **lst)
+int third_token(t_lists **lst)
 {
-	t_list	*new;
+	t_lists	*new;
 
 	new = NULL;
 	while (*lst)

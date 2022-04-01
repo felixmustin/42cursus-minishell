@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	single_token(t_list *lst)
+int	single_token(t_lists *lst)
 {
 	int				i;
 	t_token_type	type;
@@ -18,16 +18,17 @@ int	single_token(t_list *lst)
 	return (1);
 }
 
-int	parsing(t_all_cmd *all_cmd, t_list *lst)
+int	parsing(t_all_cmd *all_cmd, t_lists *lst)
 {
-	if (!check_quotes(lst))
-		return (0);
+	//if (!check_quotes(lst))
+	//	return (0);
 	if (!check_operator(lst))
 		return (0);
-	if (!single_token(lst))
+	if (single_token(lst))
 		return (0);
 	if (!parse_command(lst))
 		return (0);
-	if (set_cmd(all_cmd, lst))
+	if (!set_cmd(all_cmd, lst))
+		return (0);
 	return (1);
 }

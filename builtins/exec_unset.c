@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void init_env_suppr(char *str, char **tmp_env)
 {

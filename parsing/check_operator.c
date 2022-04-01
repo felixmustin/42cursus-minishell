@@ -1,9 +1,9 @@
 #include "../minishell.h"
 
-int	check_lst(t_list *lst)
+int	check_lst(t_lists *lst)
 {
-	t_token_type	*next;
-	t_token_type	*prev;
+	t_token_type	next;
+	t_token_type	prev;
 
 	prev = lst->prev->token->type;
 	next = lst->next->token->type;
@@ -12,11 +12,11 @@ int	check_lst(t_list *lst)
 	return (1);
 }
 
-int	check_operator(t_list *lst)
+int	check_operator(t_lists *lst)
 {
 	while (lst)
 	{
-		if (lst->token->type == pipeline || lst->token->type == or || lst->token == and)
+		if (lst->token->type == pipeline || lst->token->type == or || lst->token->type == and)
 			if (!check_lst(lst))
 				return (0);
 		lst = lst->next;

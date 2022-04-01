@@ -24,7 +24,7 @@ void signal_handler(int sign)
 int main(int argc, char **argv, char **envv)
 {
     t_all_cmd all_cmd;
-    t_list *lst;
+    t_lists *lst;
     char *input;
     char *cwd;
 
@@ -36,10 +36,20 @@ int main(int argc, char **argv, char **envv)
         if (ft_strlen(input) > 0)
             add_history(input);
         token(input, &lst);
+        second_token(&lst);
+        third_token(&lst);
         parsing(&all_cmd, lst);
+
+        int i;
+        i = -1;
+        while (++i < all_cmd.nbrcmd)
+        {
+            ft_putstr(all_cmd.cmds->cmd[i]);
+            ft_putstr("\n");
+        }
         execute(&all_cmd);
         free(input);
     }
     free(cwd);
-    free_env();
+    free_env(env);
 }

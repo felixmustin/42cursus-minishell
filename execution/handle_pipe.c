@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void handle_pipe_1(t_cmd *cmd, int **pipefd, int i)
 {

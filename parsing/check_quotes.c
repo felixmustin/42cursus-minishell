@@ -23,7 +23,7 @@ int	check_str(char	*str)
 		if (j > i && (str[i] == 42 || str[i] == 47))
 		{
 			j = check_occurence(str, i , j);
-			if (j = -1)
+			if (j == -1)
 				return (0);
 			else
 				j--;
@@ -33,11 +33,11 @@ int	check_str(char	*str)
 	return (0);
 }
 
-int	check_quotes(t_list *lst)
+int	check_quotes(t_lists *lst)
 {
 	while (lst)
 	{
-		if (check_str(lst->token->type == literal))
+		if (lst->token->type == literal)
 			if (!check_str(lst->token->content))
 				return (0);
 		lst = lst->next;

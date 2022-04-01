@@ -24,24 +24,26 @@ int	check_acces(char **str)
 	return (-1);
 }
 
-int	set_path(char *cmd, char **str)
+int set_path(char *cmd, t_token *token)
 {
+	int		j;
 	int		i;
 	char	**path;
 	char	**tpm;
-	char	*str;
+	char	*sstr;
+	char	*tok_tmp;
 
 	i = 0;
 	while (env && !check_env(env[i]))
 		i++;
-	str = ft_substr(env[i], 5, ft_strlen);
-	tpm = ft_split(str, ':');
+	sstr = ft_substr(env[i], 5, ft_strlen(env[i]) - 5);
+	tpm = ft_split(sstr, ':');
 	i = 0;
-	while (tpm)
+	while (tpm[i])
 		i++;
 	path = malloc(sizeof(char *) * i + 1);
 	i = 0;
-	while (tpm)
+	while (tpm[i])
 	{
 		path[i] = ft_strjoin(tpm[i], cmd);
 		i++;
@@ -49,34 +51,43 @@ int	set_path(char *cmd, char **str)
 	i = check_acces(path);
 	if (i == -1)
 		return (0);
-	*str = ft_strdup(path[i]);
+	j = 0;
+	while(token->content[j] != ' ')
+		j++;
+	tok_tmp = ft_substr(token->content, j, ft_strlen(token->content) - j);
+	free(token->content);
+	token->content = NULL;
+	token->content = ft_strjoin(path[i], tok_tmp);
+	ft_putstr(token->content);
 	return (1);
 }
 
-int	check_cmd(char **str)
+int check_cmd(t_token *token)
 {
+	char 	*ret;
 	char	*tpm;
 	char	*cmd;
 	int		i;
 
 	i = 0;
-	while (*str[i] != '\0' && *str[i] != 32)
+	while (token->content[i] != '\0' && token->content[i] != 32)
 		i++;
-	tpm = ft_substr(str, 0, i);
+	tpm = ft_substr(token->content, 0, i);
 	cmd = ft_strjoin("/", tpm);
 	free(tpm);
-	if (!set_path(cmd, str))
+	if (!set_path(cmd, token))
 		return (0);
 	return (1);
 }
 
-int	parse_command(t_list *lst)
+int	parse_command(t_lists *lst)
 {
 	while (lst)
 	{
 		if (lst->token->type == literal)
-			if (!check_cmd(&lst->token->content))
+			if (!check_cmd(lst->token))
 				return (0);
+		lst = lst->next;
 	}
 	return (1);
 }

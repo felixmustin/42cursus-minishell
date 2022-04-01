@@ -38,12 +38,12 @@ typedef struct s_token
 
 } t_token;
 
-typedef struct s_list
+typedef struct s_lists
 {
 	t_token			*token;
-	struct s_list	*next;
-    struct s_list   *prev;
-}	t_list;
+	struct s_lists	*next;
+    struct s_lists   *prev;
+}	t_lists;
 
 typedef struct s_cmd
 {
@@ -66,20 +66,33 @@ typedef struct s_all_cmd
 
 char **env;
 
+void ft_putstr(char *str);
+
+//env
 void	init_env(char **envv);
 void	free_env(char **envv);
+int     env_len(char **envv);
 
 char	*new_prompt(void);
-int		set_cmd(t_all_cmd *all_cmd, t_list *lst);
-t_list	*newlst(t_token *token);
-void	add_back(t_list **lst, t_list *new);
-t_token	*create_token(char *content, t_token_type type);
+
 void init_struct(t_cmd *cmd);
-int	check_quotes(t_list *lst);
-int	check_operator(t_list *lst);
-t_list	*first_lst(t_list *lst);
-int	parse_command(t_list *lst);
-int set_cmd(t_all_cmd *all_cmd, t_list *lst);
+
+//parsing
+int	check_quotes(t_lists *lst);
+int	check_operator(t_lists *lst);
+int	parse_command(t_lists *lst);
+int set_cmd(t_all_cmd *all_cmd, t_lists *lst);
+int	parsing(t_all_cmd *all_cmd, t_lists *lst);
+
+//token
+t_token	*create_token(char *content, t_token_type type);
+int	token(char *input, t_lists **lst);
+t_lists	*newlst(t_token *token);
+void	add_back(t_lists **lst, t_lists *new);
+t_lists	*first_lst(t_lists *lst);
+
+int	second_token(t_lists **lst);
+int third_token(t_lists **lst);
 
 //parse_redir
 int get_redir_l(t_token *token);
@@ -104,5 +117,7 @@ void ex_pwd(void);
 void ex_export(t_cmd *cmd);
 void ex_unset(t_cmd *cmd);
 void ex_env(void);
+
+char **dup_env(void);
 
 #endif
