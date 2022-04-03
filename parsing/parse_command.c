@@ -24,20 +24,18 @@ int	check_acces(char **str)
 	return (-1);
 }
 
-int set_path(char *cmd, t_token *token)
+int	set_path(char **cmd)
 {
-	int		j;
 	int		i;
 	char	**path;
 	char	**tpm;
-	char	*sstr;
-	char	*tok_tmp;
+	char	*str;
 
 	i = 0;
 	while (env && !check_env(env[i]))
 		i++;
-	sstr = ft_substr(env[i], 5, ft_strlen(env[i]) - 5);
-	tpm = ft_split(sstr, ':');
+	str = ft_substr(env[i], 5, ft_strlen(env[i]));
+	tpm = ft_split(str, ':');
 	i = 0;
 	while (tpm[i])
 		i++;
@@ -45,28 +43,23 @@ int set_path(char *cmd, t_token *token)
 	i = 0;
 	while (tpm[i])
 	{
-		path[i] = ft_strjoin(tpm[i], cmd);
+		path[i] = ft_strjoin(tpm[i], *cmd);
 		i++;
 	}
 	i = check_acces(path);
 	if (i == -1)
 		return (0);
-	j = 0;
-	while(token->content[j] != ' ')
-		j++;
-	tok_tmp = ft_substr(token->content, j, ft_strlen(token->content) - j);
-	free(token->content);
-	token->content = NULL;
-	token->content = ft_strjoin(path[i], tok_tmp);
-	ft_putstr(token->content);
+	free(*cmd);
+	*cmd = NULL;
+	*cmd = ft_strdup(path[i]);
 	return (1);
 }
 
-int check_cmd(t_token *token)
+int	check_cmd(t_token *token)
 {
-	char 	*ret;
 	char	*tpm;
 	char	*cmd;
+	char	*str;
 	int		i;
 
 	i = 0;
@@ -74,10 +67,64 @@ int check_cmd(t_token *token)
 		i++;
 	tpm = ft_substr(token->content, 0, i);
 	cmd = ft_strjoin("/", tpm);
-	free(tpm);
-	if (!set_path(cmd, token))
+	if (!set_path(&cmd))
 		return (0);
+	str = ft_substr(token->content, i, ft_strlen(token->content));
+	free(token->content);
+	token->content = NULL;
+	token->content = ft_strjoin(cmd, str);
 	return (1);
+}
+
+int	check_content(t_token *token)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	while (token->content[i] != '\0' && token->content[i] != 32)
+		i++;
+	str = ft_substr(token->content, 0, i);
+	if (access(str, F_OK) != -1 && access(str, X_OK) != -1)
+	{
+		free(str);
+		return (0);
+	}
+	free(str);
+	return (1);
+}
+
+int	check_builtins(t_token *token)
+{
+	char	*str;
+	int		i;
+	int		r;
+
+	while (token->content[i] != '\0' && token->content[i] != 32)
+		i++;
+	str = ft_substr(token->content, 0, i);
+	if (ft_strncmp(str, "pwd", 3) == 0)
+		r = 1;
+	if (ft_strncmp(str, "echo", 4) == 0)
+		r = 1;
+	if (ft_strncmp(str, "cd", 2) == 0)
+		r = 1;
+	if (ft_strncmp(str, "export", 6) == 0)
+		r = 1;
+	if (ft_strncmp(str, "unset", 5) == 0)
+		r = 1;
+	if (ft_strncmp(str, "env", 3) == 0)
+		r = 1;
+	if (ft_strncmp(str, "exit", 4) == 0)
+		r = 1;
+	if (r == 1)
+	{
+		free(str);
+		return (0);
+	}
+	free(str);
+	return (1);
+	
 }
 
 int	parse_command(t_lists *lst)
@@ -85,8 +132,10 @@ int	parse_command(t_lists *lst)
 	while (lst)
 	{
 		if (lst->token->type == literal)
-			if (!check_cmd(lst->token))
-				return (0);
+			if (check_builtins(lst->token))
+				if (check_content(lst->token))
+					if (!check_cmd(lst->token))
+						return (0);
 		lst = lst->next;
 	}
 	return (1);

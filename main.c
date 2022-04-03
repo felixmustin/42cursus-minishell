@@ -42,7 +42,7 @@ int main(int argc, char **argv, char **envv)
 
         int i;
         i = -1;
-        while (++i < all_cmd.nbrcmd)
+        while (++i < 2)
         {
             ft_putstr(all_cmd.cmds->cmd[i]);
             ft_putstr("\n");
