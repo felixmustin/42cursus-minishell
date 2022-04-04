@@ -75,14 +75,17 @@ int     env_len(char **envv);
 
 char	*new_prompt(void);
 
-void init_struct(t_cmd *cmd);
-
 //parsing
 int	check_quotes(t_lists *lst);
 int	check_operator(t_lists *lst);
 int	parse_command(t_lists *lst);
 int set_cmd(t_all_cmd *all_cmd, t_lists *lst);
 int	parsing(t_all_cmd *all_cmd, t_lists *lst);
+
+//parsing_utils
+void init_struct(t_cmd *cmd);
+int count_cmd(t_lists *lst);
+int get_type(char **str);
 
 //token
 t_token	*create_token(char *content, t_token_type type);
