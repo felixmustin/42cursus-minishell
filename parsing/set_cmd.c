@@ -11,12 +11,13 @@ struct s_cmd get_pipe(t_cmd cmd, t_token *token)
     return (cmd);
 }
 
-char	**create_cmd(char *str)
+void create_cmd(t_cmd *full_cmd, char *str)
 {
 	char	**new;
 
 	new = ft_split(str, 32);
-	return (new);
+    full_cmd->type = get_type(new);
+    full_cmd->cmd = new;
 }
 
 struct s_cmd parse_cmds(t_lists *lst, int i)
@@ -27,7 +28,7 @@ struct s_cmd parse_cmds(t_lists *lst, int i)
     while(lst)
     {
         if (lst->token->type == literal)
-            full_cmd.cmd = create_cmd(lst->token->content);
+            create_cmd(&full_cmd, lst->token->content);
         else if (lst->token->type == simple_redir_right)
             full_cmd.fd_o = get_redir_r(lst->token);
         else if (lst->token->type == simple_redir_left)
@@ -59,20 +60,6 @@ int interpreter(t_lists *lst, t_all_cmd *all_cmd)
         i++;
     }
     return (1);
-}
-
-int count_cmd(t_lists *lst)
-{
-    int i;
-
-    i = 0;
-    while(lst)
-    {
-        if (lst->token->type == literal)
-            i++;
-        lst = lst->next;
-    }
-    return (i);
 }
 
 int set_cmd(t_all_cmd *all_cmd, t_lists *lst)

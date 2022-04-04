@@ -13,7 +13,7 @@ int	single_token(t_lists *lst)
 		i++;
 	}
 	if (i == 1)
-		if (type != literal || type != double_redir_left || type != double_redir_right || type != simple_redir_left || type != simple_redir_right)
+		if (type != literal && type != double_redir_left && type != double_redir_right && type != simple_redir_left && type != simple_redir_right)
 			return (0);
 	return (1);
 }
@@ -24,7 +24,7 @@ int	parsing(t_all_cmd *all_cmd, t_lists *lst)
 	//	return (0);
 	if (!check_operator(lst))
 		return (0);
-	if (single_token(lst))
+	if (!single_token(lst))
 		return (0);
 	if (!parse_command(lst))
 		return (0);
