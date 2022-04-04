@@ -13,17 +13,6 @@ t_lists	*newlst(t_token *token)
 	return (new);
 }
 
-t_lists	*last_lst(t_lists *lst)
-{
-	while (lst)
-	{
-		if (lst->next == NULL)
-			return (lst);
-		lst = lst->next;
-	}
-	return (lst);
-}
-
 t_lists	*first_lst(t_lists *lst)
 {
 	while (lst)
@@ -33,6 +22,15 @@ t_lists	*first_lst(t_lists *lst)
 		lst = lst->prev;
 	}
 	return (lst);
+}
+
+t_lists    *last_lst(t_lists *lst)
+{
+    if (!lst)
+        return (NULL);
+    while (lst->next)
+        lst = lst->next;
+    return (lst);
 }
 
 void	add_back(t_lists **lst, t_lists *new)
