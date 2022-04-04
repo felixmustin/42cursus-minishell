@@ -13,12 +13,12 @@
 void signal_handler(int sign)
 {
     if (sign == SIGINT)
-	{
+    {
         ft_putstr_fd("\n", 0);
         rl_on_new_line();
         rl_replace_line("", 0);
         rl_redisplay();
-	}
+    }
 }
 
 void close_fd(t_all_cmd *all_cmd)
