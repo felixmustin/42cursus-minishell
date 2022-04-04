@@ -21,6 +21,42 @@ void signal_handler(int sign)
 	}
 }
 
+void close_fd(t_all_cmd *all_cmd)
+{
+    int i;
+
+    i = 0;
+    while (i < all_cmd->nbrcmd)
+    {
+        if (all_cmd->cmds[i].fd_i != 0)
+            close(all_cmd->cmds[i].fd_i);
+        if (all_cmd->cmds[i].fd_o != 1)
+            close(all_cmd->cmds[i].fd_o);
+        i++;
+    }
+}
+
+void free_cmds(t_all_cmd *all_cmd)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (i < all_cmd->nbrcmd)
+    {
+        j = 0;
+        while (all_cmd->cmds[i].cmd[j])
+        {
+            free(all_cmd->cmds[i].cmd[j]);
+            j++;
+        }
+        free(all_cmd->cmds[i].cmd);
+        i++;
+    }
+    close_fd(all_cmd);
+    free(all_cmd->cmds);
+}
+
 int main(int argc, char **argv, char **envv)
 {
     t_all_cmd all_cmd;
@@ -31,23 +67,23 @@ int main(int argc, char **argv, char **envv)
     init_env(envv);
     signal(SIGINT, signal_handler);
     cwd = new_prompt();
+    lst = NULL;
     while ((input = readline(cwd)) != NULL)
     {
         if (ft_strlen(input) > 0)
             add_history(input);
-        token(input, &lst);
-        second_token(&lst);
-        third_token(&lst);
-        parsing(&all_cmd, lst);
-
-        int i;
-        i = -1;
-        while (++i < all_cmd.nbrcmd)
+        if (ft_strlen(input))
         {
-            ft_putstr(all_cmd.cmds->cmd[i]);
-            ft_putstr("\n");
+            token(input, &lst);
+            second_token(&lst);
+            third_token(&lst);
+            ft_putstr(lst->token->content);
+            if (parsing(&all_cmd, lst))
+            {
+                execute(&all_cmd);
+                free_cmds(&all_cmd);
+            }
         }
-        execute(&all_cmd);
         free(input);
     }
     free(cwd);
