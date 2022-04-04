@@ -77,7 +77,6 @@ int main(int argc, char **argv, char **envv)
             token(input, &lst);
             second_token(&lst);
             third_token(&lst);
-            ft_putstr(lst->token->content);
             if (parsing(&all_cmd, lst))
             {
                 execute(&all_cmd);
