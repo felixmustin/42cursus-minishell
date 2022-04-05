@@ -29,9 +29,9 @@ t_token_type	define_type(char c)
 		type = variable;
 	if (c == ' ' || c == '\f' || c == '\n' || c == '\v' || c == '\t' || c == '\r')
 		type = space;
-	if (c == 42)
+	if (c == 34)
 		type = double_quote;
-	if (c == 47)
+	if (c == 39)
 		type = single_quote;
 	return (type);
 }

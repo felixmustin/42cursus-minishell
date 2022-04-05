@@ -23,12 +23,16 @@ void	free_token(t_lists *lst)
 
 void	free_lst(t_lists **lst)
 {
+	t_lists	*tpm;
+
 	free_content(*lst);
 	free_token(*lst);
 	while (*lst)
 	{
-		free(*lst);
-		*lst = (*lst)->next;
+		tpm = (*lst)->next;
+		if (*lst)
+			free(*lst);
+		*lst = tpm;
 	}
 	*lst = NULL;
 }

@@ -132,10 +132,12 @@ int	find_variable(char **str)
 {
 	int	i;
 	int	j;
+	int	len;
 
 	i = 0;
 	j = 0;
-	while(env[i] && ft_strncmp(*str, env[i], ft_strlen(*str)) != 0)
+	len = ft_strlen(*str);
+	while(env[i] && ft_strncmp(*str, env[i], len) != 0)
 		i++;
 	if (!env[i])
 		return (0);
@@ -159,7 +161,7 @@ int	check_variable(t_token *token)
 	if (token->content[i] == '\0')
 		return (0);
 	str = ft_substr(token->content, i + 1, ft_strlen(token->content));
-	tpm = ft_substr(token->content, 0, i - 1);
+	tpm = ft_substr(token->content, 0, i);
 	if (!find_variable(&str))
 	{
 		free(token->content);
@@ -183,6 +185,7 @@ int parse_command(t_lists *lst)
     {
         if (lst->token->type == literal)
         {
+			check_variable(lst->token);
             if (check_builtins(lst->token))
                 if (check_content(lst->token))
                     if (!check_cmd(lst->token))
