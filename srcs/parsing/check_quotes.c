@@ -30,7 +30,7 @@ int	check_str(char	*str)
 		}
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	check_quotes(t_lists *lst)

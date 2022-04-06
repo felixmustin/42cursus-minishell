@@ -86,9 +86,10 @@ int	set_third_token(t_lists **lst, t_lists **newlist)
 	type = (*lst)->token->type;
 	if (type != space)
 	{
-		if (type == literal || type == variable)
+		if (type == literal || type == variable || type == single_quote || type == double_quote)
 		{
 			content = new_content_literal(lst);
+			type = literal;
 			token = create_token(content, type);
 			new = newlst(token);
 			add_back(newlist, new);

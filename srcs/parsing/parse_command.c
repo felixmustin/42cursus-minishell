@@ -42,7 +42,7 @@ int set_path(char **cmd)
     i = 0;
     while (tpm[i])
         i++;
-    path = malloc(sizeof(char *) * i + 1);
+    path = malloc(sizeof(char *) * (i + 1));
 	if (!path)
 		return (0);
     i = 0;
@@ -51,6 +51,7 @@ int set_path(char **cmd)
         path[i] = ft_strjoin(tpm[i], *cmd);
         i++;
     }
+    path[i] = NULL;
     i = check_acces(path);
     if (i == -1)
         return (0);

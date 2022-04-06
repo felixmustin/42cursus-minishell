@@ -82,6 +82,7 @@ int		env_len(char **envv);
 char	*new_prompt(void);
 //parsing
 int		check_quotes(t_lists *lst);
+int    unclosed_quotes(t_lists *lst);
 int		check_operator(t_lists *lst);
 int		parse_command(t_lists *lst);
 int		set_cmd(t_all_cmd *all_cmd, t_lists *lst);

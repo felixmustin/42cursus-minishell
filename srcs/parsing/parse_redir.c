@@ -20,9 +20,11 @@ int get_redir_dl(t_token *token)
     if (!fd)
         return (0);
     size = ft_strlen(token->content);
+    ft_putstr("heredoc>");
     line = get_next_line(0);
     while(line)
     {
+        ft_putstr("heredoc>");
         if (!strncmp(line, token->content, size))
             break ;
         ft_putstr_fd(line, fd);
