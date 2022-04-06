@@ -8,7 +8,7 @@ char	*new_content_literal(t_lists **lst)
 
 	content = ft_strdup((*lst)->token->content);
 	*lst = (*lst)->next;
-	while (*lst && ((*lst)->token->type == literal || (*lst)->token->type == space || (*lst)->token->type == variable))
+	while (*lst && ((*lst)->token->type == literal || (*lst)->token->type == space || (*lst)->token->type == variable || (*lst)->token->type == double_quote || (*lst)->token->type == single_quote))
 	{
 		tpm = ft_strdup((*lst)->token->content);
 		tpm1 = ft_strjoin(content, tpm);

@@ -35,7 +35,7 @@ int set_path(char **cmd)
     char    *str;
 
     i = 0;
-    while (env && !check_env(env[i]))
+    while (env[i] && !check_env(env[i]))
         i++;
     str = ft_substr(env[i], 5, ft_strlen(env[i]));
     tpm = ft_split(str, ':');
@@ -43,6 +43,8 @@ int set_path(char **cmd)
     while (tpm[i])
         i++;
     path = malloc(sizeof(char *) * i + 1);
+	if (!path)
+		return (0);
     i = 0;
     while (tpm[i])
     {

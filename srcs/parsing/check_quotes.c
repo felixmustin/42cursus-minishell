@@ -4,11 +4,11 @@ int	check_occurence(char *str, int i, int j)
 {
 	while (j > i)
 	{
-		if (str[i] == str[j])
-			return (-1);
+		if (str[j] == str[i])
+			return (j);
 		j--;
 	}
-	return (j);
+	return (-1);
 }
 
 int	check_str(char	*str)
@@ -20,7 +20,7 @@ int	check_str(char	*str)
 	j = ft_strlen(str);
 	while (str[i] != '\0')
 	{
-		if (j > i && (str[i] == 42 || str[i] == 47))
+		if (j > i && (str[i] == 34 || str[i] == 39))
 		{
 			j = check_occurence(str, i , j);
 			if (j == -1)
