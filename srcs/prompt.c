@@ -2,8 +2,10 @@
 
 char *parse_cwd(char *cwd)
 {
-    char *last_cwd;
-    char *cut_cwd;
+    char 	*last_cwd;
+    char 	*cut_cwd;
+	char	*mid_cwd;
+	char	*home;
     int i;
     int j;
 
@@ -19,8 +21,12 @@ char *parse_cwd(char *cwd)
         cut_cwd[j++] = cwd[i];
     cut_cwd[j++] = ' ';
     cut_cwd[j] = 0;
-    last_cwd = ft_strjoin("\U0001F449 ", cut_cwd);
+	mid_cwd = ft_strjoin(RED, cut_cwd);
+    home = ft_strjoin("\U0001F449 ", mid_cwd);
+	last_cwd = ft_strjoin(home, DEFAULT);
     free(cut_cwd);
+	free(home);
+	free(mid_cwd);
     return (last_cwd);   
 }
 

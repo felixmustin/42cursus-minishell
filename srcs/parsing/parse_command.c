@@ -2,11 +2,14 @@
 
 int check_env(char *str)
 {
-    if (str[0] == 'P')
-        if (str[1] == 'A')
-            if (str[2] == 'T')
-                if (str[3] == 'H')
-                    return (1);
+	if (ft_strlen(str) > 3)
+	{
+		if (str[0] == 'P')
+			if (str[1] == 'A')
+				if (str[2] == 'T')
+					if (str[3] == 'H')
+						return (1);
+	}
     return (0); 
 }
 
