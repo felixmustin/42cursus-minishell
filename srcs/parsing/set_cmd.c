@@ -20,13 +20,32 @@ void create_cmd(t_cmd *full_cmd, char *str)
     full_cmd->cmd = new;
 }
 
-struct s_cmd parse_cmds(t_lists *lst)
+t_lists *move_lst(t_lists *lst, int i)
+{
+    int count;
+
+    if (i > 0)
+    {
+        count = 0;
+        while (count < i)
+        {
+            if (lst->token->type == pipeline)
+                count++;
+            lst = lst->next;
+        }
+    }
+    return (lst);
+}
+
+struct s_cmd parse_cmds(t_lists *lst, int i)
 {
     t_cmd full_cmd;
 
     init_struct(&full_cmd);
     while(lst)
     {
+        lst = move_lst(lst, i);
+        i = 0;
         if (lst->token->type == literal)
             create_cmd(&full_cmd, lst->token->content);
         else if (lst->token->type == simple_redir_right)
@@ -44,30 +63,21 @@ struct s_cmd parse_cmds(t_lists *lst)
     return (full_cmd);
 }
 
-int interpreter(t_lists *lst, t_all_cmd *all_cmd)
+int set_cmd(t_all_cmd *all_cmd, t_lists *lst)
 {
     int i;
 
+    all_cmd->nbrcmd = count_cmd(lst);
     all_cmd->cmds = malloc(sizeof(t_cmd) * all_cmd->nbrcmd);
     if (!all_cmd->cmds)
         return (0);
     i = 0;
     while (i < all_cmd->nbrcmd)
     {
-        all_cmd->cmds[i] = parse_cmds(lst);
+        all_cmd->cmds[i] = parse_cmds(lst, i);
         if (i > 0)
             all_cmd->cmds[i].pipe_i = all_cmd->cmds[i - 1].pipe_o;
         i++;
     }
     return (1);
-}
-
-int set_cmd(t_all_cmd *all_cmd, t_lists *lst)
-{
-    all_cmd->nbrcmd = count_cmd(lst);
-    //check_cmd(lst);
-    //expand_var(lst);
-    if (interpreter(lst, all_cmd))
-        return (1);
-    return (0);
 }

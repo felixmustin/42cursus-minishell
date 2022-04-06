@@ -48,6 +48,7 @@ void free_cmds(t_all_cmd *all_cmd)
         while (all_cmd->cmds[i].cmd[j])
         {
             free(all_cmd->cmds[i].cmd[j]);
+            all_cmd->cmds[i].cmd[j] = NULL;
             j++;
         }
         free(all_cmd->cmds[i].cmd);
