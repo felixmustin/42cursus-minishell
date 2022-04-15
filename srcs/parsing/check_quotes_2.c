@@ -1,14 +1,14 @@
 #include "../../includes/minishell.h"
 
-int close_quotes(t_lists *lst, char *content)
+int close_quotes(char **input, char *content)
 {
     char *tmp;
 
-    tmp = ft_strdup(lst->token->content);
-	free(lst->token->content);
-	lst->token->content = NULL;
-	lst->token->content = ft_strjoin(tmp, content);
-    if (!lst->token->content)
+    tmp = ft_strdup(*input);
+	free(*input);
+	*input = NULL;
+	*input = ft_strjoin(tmp, content);
+    if (!*input)
         return (0);
     free(tmp);
     return (1);
@@ -32,7 +32,7 @@ int check_closed_quote(char *line)
         return (1);
 }
 
-int unclosed_quotes(t_lists *lst)
+int unclosed_quotes(char **input)
 {
 	char *content;
 	char *tmp;
@@ -45,14 +45,16 @@ int unclosed_quotes(t_lists *lst)
     {
 		tmp = ft_strdup(content);
 		free(content);
+		content = NULL;
 		content = ft_strjoin(tmp, line);
 		free(tmp);
+		tmp = NULL;
         if (check_closed_quote(line))
-            return (close_quotes(lst, content));
+            return (close_quotes(input, content));
 		ft_putstr("quote>");
         free(line);
         line = get_next_line(0);
     }
     free(line);
-	return(close_quotes(lst, content));
+	return(close_quotes(input, content));
 }

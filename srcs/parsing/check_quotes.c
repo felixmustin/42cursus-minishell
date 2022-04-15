@@ -15,32 +15,35 @@ int	check_str(char	*str)
 {
 	int	i;
 	int	j;
+	int	k;
 
 	i = 0;
 	j = ft_strlen(str);
+	k = ft_strlen(str);
 	while (str[i] != '\0')
 	{
-		if (j > i && (str[i] == 34 || str[i] == 39))
+		if (j > i && str[i] == 34)
 		{
 			j = check_occurence(str, i , j);
 			if (j == -1)
 				return (0);
-			else
-				j--;
+			j--;
+		}
+		if (k > i && (str[i] == 39))
+		{
+			k = check_occurence(str, i, k);
+			if (k == -1)
+				return (0);
+			k--;
 		}
 		i++;
 	}
 	return (1);
 }
 
-int	check_quotes(t_lists *lst)
+int	check_quotes(char *input)
 {
-	while (lst)
-	{
-		if (lst->token->type == literal)
-			if (!check_str(lst->token->content))
-				return (0);
-		lst = lst->next;
-	}
+	if (!check_str(input))
+		return (0);
 	return (1);
 }

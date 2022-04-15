@@ -52,6 +52,34 @@ char	*new_content_varaible(t_lists **lst)
 	return (content);
 }
 
+char	*new_content_quotes(t_lists **lst, t_token_type type)
+{
+	char	*content;
+	char	*tpm;
+	char	*tpm1;
+	int		quotes;
+
+	content = ft_strdup((*lst)->token->content);
+	*lst = (*lst)->next;
+	quotes = 0;
+	while (*lst && !quotes)
+	{
+		tpm = ft_strdup((*lst)->token->content);
+		tpm1 = ft_strjoin(content, tpm);
+		free(content);
+		content = NULL;
+		content = ft_strdup(tpm1);
+		free(tpm1);
+		tpm1 = NULL;
+		free(tpm);
+		tpm = NULL;
+		if ((*lst)->token->type == type)
+			quotes = 1;
+		*lst = (*lst)->next;
+	}
+	return (content);
+}
+
 t_token_type	check_double(char *content, t_token_type type)
 {
 	if (content[0] == '>' && content[1] == '>')
@@ -75,6 +103,8 @@ int	set_second_token(t_lists **lst, t_lists **newlist)
 	type = (*lst)->token->type;
 	if (type == variable)
 		content = new_content_varaible(lst);
+	if (type == single_quote || type == double_quote)
+		content = new_content_quotes(lst, type);
 	else
 		content = new_content(lst);
 	type = check_double(content, type);

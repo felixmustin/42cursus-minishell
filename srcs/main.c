@@ -77,9 +77,7 @@ int main(int argc, char **argv, char **envv)
     	        add_history(input);
     	    if (ft_strlen(input))
     	    {
-    	        if (!main_token(input, &lst))
-					free_lst(&lst);
-    	        if (parsing(&all_cmd, lst))
+    	        if (parsing(&all_cmd, input, &lst))
 				{
    	 	        	execute(&all_cmd);
      		       	free_cmds(&all_cmd);

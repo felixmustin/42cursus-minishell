@@ -6,6 +6,7 @@ int	main_token(char *input, t_lists **lst)
 		return (0);
 	if (!second_token(lst))
 		return (0);
+	delete_quotes(lst);
 	if (!third_token(lst))
 		return (0);
 	return (1);

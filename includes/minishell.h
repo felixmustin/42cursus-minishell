@@ -39,6 +39,7 @@ typedef enum s_token_type
 	double_quote,
 	variable,
 	backslash,
+	undesirable,
 }   t_token_type;
 
 typedef struct s_token
@@ -81,12 +82,12 @@ void	free_env(char **envv);
 int		env_len(char **envv);
 char	*new_prompt(void);
 //parsing
-int		check_quotes(t_lists *lst);
-int    unclosed_quotes(t_lists *lst);
+int		check_quotes(char *input);
+int		unclosed_quotes(char **input);
 int		check_operator(t_lists *lst);
 int		parse_command(t_lists *lst);
 int		set_cmd(t_all_cmd *all_cmd, t_lists *lst);
-int		parsing(t_all_cmd *all_cmd, t_lists *lst);
+int		parsing(t_all_cmd *all_cmd, char *input, t_lists **lst);
 void	free_cmds(t_all_cmd *all_cmd);
 //parsing_utils
 void	init_struct(t_cmd *cmd);
@@ -102,6 +103,7 @@ t_lists	*first_lst(t_lists *lst);
 int		second_token(t_lists **lst);
 int		third_token(t_lists **lst);
 void	free_lst(t_lists **lst);
+int		delete_quotes(t_lists **lst);
 //parse_redir
 int		get_redir_l(t_token *token);
 int		get_redir_dl(t_token *token);

@@ -8,7 +8,7 @@ char	*new_content_literal(t_lists **lst)
 
 	content = ft_strdup((*lst)->token->content);
 	*lst = (*lst)->next;
-	while (*lst && ((*lst)->token->type == literal || (*lst)->token->type == space || (*lst)->token->type == variable || (*lst)->token->type == double_quote || (*lst)->token->type == single_quote))
+	while (*lst && ((*lst)->token->type == literal || (*lst)->token->type == space || (*lst)->token->type == single_quote || (*lst)->token->type == double_quote))
 	{
 		tpm = ft_strdup((*lst)->token->content);
 		tpm1 = ft_strjoin(content, tpm);
@@ -76,7 +76,7 @@ char	*neww_content(t_lists **lst, t_token_type type)
 	return (content);
 }
 
-int	set_third_token(t_lists **lst, t_lists **newlist)
+int	set_third_token(t_lists **lst, t_lists **newlist, int i)
 {
 	char			*content;
 	t_token			*token;
@@ -84,11 +84,14 @@ int	set_third_token(t_lists **lst, t_lists **newlist)
 	t_lists			*new;
 
 	type = (*lst)->token->type;
-	if (type != space)
+	if (type != space && type != undesirable)
 	{
 		if (type == literal || type == variable || type == single_quote || type == double_quote)
 		{
-			content = new_content_literal(lst);
+			if (i == 0)
+				content = ft_strdup((*lst)->token->content);
+			else
+				content = new_content_literal(lst);
 			type = literal;
 			token = create_token(content, type);
 			new = newlst(token);
@@ -117,10 +120,17 @@ int	set_third_token(t_lists **lst, t_lists **newlist)
 int third_token(t_lists **lst)
 {
 	t_lists	*new;
+	int		i;
 
 	new = NULL;
+	i = 0;
 	while (*lst)
-		set_third_token(lst, &new);
+	{
+		set_third_token(lst, &new, i);
+		if (i == 0)
+			*lst = (*lst)->next;
+		i++;
+	}
 	*lst = first_lst(new);
 	return (1);
 }
