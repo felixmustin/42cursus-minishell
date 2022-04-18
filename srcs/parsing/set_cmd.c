@@ -15,7 +15,7 @@ void create_cmd(t_cmd *full_cmd, char *str)
 {
 	char	**new;
 
-	new = ft_split(str, 32);
+	new = ft_split(str, -1);
     full_cmd->type = get_type(new);
     full_cmd->cmd = new;
 }

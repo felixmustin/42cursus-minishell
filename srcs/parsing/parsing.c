@@ -25,7 +25,7 @@ int	printf_token(t_lists *lst)
 	i = 0;
 	while (lst)
 	{
-		printf("content : %s\n", lst->token->content);
+		printf("content : [%s]\n", lst->token->content);
 		printf("type : %u\n", lst->token->type);
 		lst = lst->next;
 	}
@@ -41,13 +41,13 @@ int	parsing(t_all_cmd *all_cmd, char *input, t_lists **lst)
 	}
 	if (!main_token(input, lst))
 		return (0);
-	printf_token(*lst);
 	if (!check_operator(*lst))
 		return (0);
 	if (!single_token(*lst))
 		return (0);
 	if (!parse_command(*lst))
 		return (0);
+	printf_token(*lst);
 	if (!set_cmd(all_cmd, *lst))
 	{
 		free_cmds(all_cmd);

@@ -26,7 +26,9 @@ SRCS	=	srcs/main.c \
 			srcs/token/second_token.c \
 			srcs/token/third_token.c \
 			srcs/token/token.c \
+			srcs/token/check_variable.c \
 			srcs/token/delete_quotes.c \
+			srcs/token/set_variable.c \
 			get_next_line/get_next_line.c \
 
 INCL		= includes/minishell.h

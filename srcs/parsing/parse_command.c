@@ -134,68 +134,14 @@ int check_builtins(t_token *token)
     
 }
 
-int	find_variable(char **str)
-{
-	int	i;
-	int	j;
-	int	len;
-
-	i = 0;
-	j = 0;
-	len = ft_strlen(*str);
-	while(env[i] && ft_strncmp(*str, env[i], len) != 0)
-		i++;
-	if (!env[i])
-		return (0);
-	while (env[i][j] != '=')
-		j++;
-	free(*str);
-	*str = NULL;
-	*str = ft_substr(env[i], j + 1, ft_strlen(env[i]));
-	return (1);
-}
-
-int	check_variable(t_token *token)
-{
-	char	*str;
-	char	*tpm;
-	int		i;
-
-	i = 0;
-	while (token->content[i] != '\0' && token->content[i] != '$')
-		i++;
-	if (token->content[i] == '\0')
-		return (0);
-	str = ft_substr(token->content, i + 1, ft_strlen(token->content));
-	tpm = ft_substr(token->content, 0, i);
-	if (!find_variable(&str))
-	{
-		free(token->content);
-		token->content = NULL;
-		token->content = ft_strdup(tpm);
-	}
-	else
-	{
-		free(token->content);
-		token->content = NULL;
-		token->content = ft_strjoin(tpm, str);
-	}
-	free(str);
-	free(tpm);
-	return (1);
-}
-
 int parse_command(t_lists *lst)
 {
     while (lst)
     {
         if (lst->token->type == literal)
         {
-			check_variable(lst->token);
             if (check_builtins(lst->token))
-                if (check_content(lst->token))
-                    if (!check_cmd(lst->token))
-                        return (0);
+				check_cmd(lst->token);
         }
         lst = lst->next;
     }

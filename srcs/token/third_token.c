@@ -1,24 +1,41 @@
 #include "../../includes/minishell.h"
 
+char	*set_split(char c)
+{
+	char	*split;
+
+	split = malloc(sizeof(char) * 2);
+	if (!split)
+		return (NULL);
+	split[0] = c;
+	split[1] = '\0';
+	return (split);
+}
+
 char	*new_content_literal(t_lists **lst)
 {
 	char			*content;
 	char			*tpm;
 	char			*tpm1;
+	char			*split;
 
-	content = ft_strdup((*lst)->token->content);
+	split = set_split(-1);
+	content = ft_strjoin((*lst)->token->content, split);
 	*lst = (*lst)->next;
-	while (*lst && ((*lst)->token->type == literal || (*lst)->token->type == space || (*lst)->token->type == single_quote || (*lst)->token->type == double_quote))
+	while (*lst && ((*lst)->token->type == literal || (*lst)->token->type == space || (*lst)->token->type == single_quote || (*lst)->token->type == double_quote || (*lst)->token->type == variable))
 	{
-		tpm = ft_strdup((*lst)->token->content);
-		tpm1 = ft_strjoin(content, tpm);
-		free(content);
-		content = NULL;
-		content = ft_strdup(tpm1);
-		free(tpm);
-		free(tpm1);
-		tpm = NULL;
-		tpm1 = NULL;
+		if ((*lst)->token->type != space)
+		{
+			tpm = ft_strdup((*lst)->token->content);
+			tpm1 = ft_strjoin(content, tpm);
+			free(content);
+			content = NULL;
+			content = ft_strjoin(tpm1, split);
+			free(tpm);
+			free(tpm1);
+			tpm = NULL;
+			tpm1 = NULL;
+		}
 		*lst = (*lst)->next;
 	}
 	return (content);
@@ -76,7 +93,7 @@ char	*neww_content(t_lists **lst, t_token_type type)
 	return (content);
 }
 
-int	set_third_token(t_lists **lst, t_lists **newlist, int i)
+int	set_third_token(t_lists **lst, t_lists **newlist)
 {
 	char			*content;
 	t_token			*token;
@@ -88,10 +105,10 @@ int	set_third_token(t_lists **lst, t_lists **newlist, int i)
 	{
 		if (type == literal || type == variable || type == single_quote || type == double_quote)
 		{
-			if (i == 0)
-				content = ft_strdup((*lst)->token->content);
-			else
-				content = new_content_literal(lst);
+			//if (i == 0)
+			//	content = ft_strdup((*lst)->token->content);
+			//else
+			content = new_content_literal(lst);
 			type = literal;
 			token = create_token(content, type);
 			new = newlst(token);
@@ -112,7 +129,7 @@ int	set_third_token(t_lists **lst, t_lists **newlist, int i)
 		new = newlst(token);
 		add_back(newlist, new);
 	}
-	if (type == space)
+	if (type == space || type == undesirable)
 		*lst = (*lst)->next;
 	return (1);
 }
@@ -126,9 +143,9 @@ int third_token(t_lists **lst)
 	i = 0;
 	while (*lst)
 	{
-		set_third_token(lst, &new, i);
-		if (i == 0)
-			*lst = (*lst)->next;
+		set_third_token(lst, &new);
+		//if (i == 0)
+		//	*lst = (*lst)->next;
 		i++;
 	}
 	*lst = first_lst(new);

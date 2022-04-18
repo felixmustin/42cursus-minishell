@@ -38,7 +38,6 @@ typedef enum s_token_type
 	single_quote,
 	double_quote,
 	variable,
-	backslash,
 	undesirable,
 }   t_token_type;
 
@@ -104,6 +103,9 @@ int		second_token(t_lists **lst);
 int		third_token(t_lists **lst);
 void	free_lst(t_lists **lst);
 int		delete_quotes(t_lists **lst);
+int		check_variable(t_lists **lst);
+int		search_variable(char **str);
+int		set_variable(t_lists **lst);
 //parse_redir
 int		get_redir_l(t_token *token);
 int		get_redir_dl(t_token *token);
