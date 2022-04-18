@@ -30,28 +30,11 @@ char	*new_content_varaible(t_lists **lst)
 {
 	t_token_type	type;
 	char			*content;
-	//char			*tpm;
-	//char			*tpm1;
 	
 	type = variable;
 	content = ft_strdup((*lst)->token->content);
-	//printf("%s\n", content);
 	search_variable(&content);
 	*lst = (*lst)->next;
-	/*while (*lst && (*lst)->token->type != space)
-	{
-		tpm = ft_strdup((*lst)->token->content);
-		search_variable(tpm);
-		tpm1 = ft_strjoin(content, tpm);
-		free(content);
-		content = NULL;
-		content = ft_strdup(tpm1);
-		free(tpm1);
-		free(tpm);
-		tpm1 = NULL;
-		tpm = NULL;
-		*lst = (*lst)->next;
-	}*/
 	return (content);
 }
 

@@ -79,5 +79,11 @@ int set_cmd(t_all_cmd *all_cmd, t_lists *lst)
             all_cmd->cmds[i].pipe_i = all_cmd->cmds[i - 1].pipe_o;
         i++;
     }
-    return (1);
+    if (i == 1 && all_cmd->cmds[0].type > 0)
+        return (1);
+    else
+    {
+        all_cmd->pids = malloc(sizeof(pid_t) * i);
+        return (1);
+    }
 }

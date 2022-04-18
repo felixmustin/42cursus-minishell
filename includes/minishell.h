@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/libft.h"
@@ -57,12 +58,14 @@ typedef struct s_lists
 
 typedef struct s_cmd
 {
-    int		type; //0:exec  1-7:builtins
+    int		type; //-1: no cmd 0:exec  1-7:builtins
     char	**cmd;
 	int		fd_i;
     int		fd_o;
     int		pipe_i; //0:no  1: | 2:&&  3:||
     int		pipe_o; //0:no  1: | 2:&&  3:||
+    int		saved_stdin;
+    int		saved_stdout;
 } t_cmd;
 
 typedef struct s_all_cmd
@@ -70,7 +73,8 @@ typedef struct s_all_cmd
     struct s_cmd	*cmds;
     int 			nbrcmd;
     int 			**pipefd;
-
+    int             status;
+    pid_t           *pids;
 } t_all_cmd;
 
 char	**env;
@@ -119,13 +123,18 @@ void	free_pipe(t_all_cmd *all_cmd);
 void	execute(t_all_cmd *all_cmd);
 void	handle_pipe(t_all_cmd *all_cmd, int i);
 void	handle_redir(t_cmd *cmd);
+void    handle_redir_fork(t_cmd *cmd);
+void    exit_cmds(t_all_cmd *all_cmd, int i);
 //builtins
-void	ex_echo(t_cmd *cmd);
-void	ex_cd(t_cmd *cmd);
-void	ex_pwd(void);
-void	ex_export(t_cmd *cmd);
-void	ex_unset(t_cmd *cmd);
-void	ex_env(void);
+void    ex_exit(t_all_cmd *all_cmd, int i);
+void    ex_echo(t_all_cmd *all_cmd, int i);
+void    ex_cd(t_all_cmd *all_cmd, int i);
+void    ex_pwd(t_all_cmd *all_cmd, int i);
+void    ex_export(t_all_cmd *all_cmd, int i);
+int     check_valid_exp(t_all_cmd *all_cmd, int j);
+void    print_error(t_all_cmd *all_cmd, int j, int i);
+void    ex_unset(t_all_cmd *all_cmd, int i);
+void    ex_env(t_all_cmd *all_cmd, int i);
 char	**dup_env(void);
 
 #endif

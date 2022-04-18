@@ -1,15 +1,5 @@
 #include "../includes/minishell.h"
 
-/*void init_term(void)
-{
-    struct termios termios;
-
-    //tcgetattr(0, &termios);
-    //termios.c_cc[VEOF]  = 3; // ^C
-    //termios.c_cc[VINTR] = 4; // ^D
-    //tcsetattr(0,TCSANOW,&termios);
-}*/
-
 void signal_handler(int sign)
 {
     if (sign == SIGINT)
@@ -21,21 +11,6 @@ void signal_handler(int sign)
     }
 }
 
-void close_fd(t_all_cmd *all_cmd)
-{
-    int i;
-
-    i = 0;
-    while (i < all_cmd->nbrcmd)
-    {
-        if (all_cmd->cmds[i].fd_i != 0)
-            close(all_cmd->cmds[i].fd_i);
-        if (all_cmd->cmds[i].fd_o != 1)
-            close(all_cmd->cmds[i].fd_o);
-        i++;
-    }
-}
-
 void free_cmds(t_all_cmd *all_cmd)
 {
     int i;
@@ -44,17 +19,19 @@ void free_cmds(t_all_cmd *all_cmd)
     i = 0;
     while (i < all_cmd->nbrcmd)
     {
-        j = 0;
-        while (all_cmd->cmds[i].cmd[j])
+        if (all_cmd->cmds[i].type >= 0)
         {
-            free(all_cmd->cmds[i].cmd[j]);
-            all_cmd->cmds[i].cmd[j] = NULL;
-            j++;
+            j = 0;
+            while (all_cmd->cmds[i].cmd[j])
+            {
+                free(all_cmd->cmds[i].cmd[j]);
+                all_cmd->cmds[i].cmd[j] = NULL;
+                j++;
+            }
+            free(all_cmd->cmds[i].cmd);
         }
-        free(all_cmd->cmds[i].cmd);
         i++;
     }
-    close_fd(all_cmd);
     free(all_cmd->cmds);
 }
 

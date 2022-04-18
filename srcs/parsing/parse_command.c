@@ -69,7 +69,7 @@ int check_cmd(t_token *token)
     int     i;
 
     i = 0;
-    while (token->content[i] != '\0' && token->content[i] != 32)
+    while (token->content[i] != '\0' && token->content[i] != 32 && token->content[i] != -1)
         i++;
     tpm = ft_substr(token->content, 0, i);
     cmd = ft_strjoin("/", tpm);
@@ -104,34 +104,28 @@ int check_builtins(t_token *token)
 {
     char    *str;
     int     i;
-    int     r;
 
     i = 0;
     while (token->content[i] != '\0' && token->content[i] != 32)
         i++;
     str = ft_substr(token->content, 0, i);
+    i = 1;
     if (ft_strncmp(str, "pwd", 3) == 0)
-        r = 1;
+        i = 0;
     if (ft_strncmp(str, "echo", 4) == 0)
-        r = 1;
+        i = 0;
     if (ft_strncmp(str, "cd", 2) == 0)
-        r = 1;
+        i = 0;
     if (ft_strncmp(str, "export", 6) == 0)
-        r = 1;
+        i = 0;
     if (ft_strncmp(str, "unset", 5) == 0)
-        r = 1;
+        i = 0;
     if (ft_strncmp(str, "env", 3) == 0)
-        r = 1;
+        i = 0;
     if (ft_strncmp(str, "exit", 4) == 0)
-        r = 1;
-    if (r == 1)
-    {
-        free(str);
-        return (0);
-    }
+        i = 0;
     free(str);
-    return (1);
-    
+    return (i);
 }
 
 int parse_command(t_lists *lst)

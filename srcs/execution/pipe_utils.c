@@ -29,8 +29,11 @@ void free_pipe(t_all_cmd *all_cmd)
 {
     int i;
 
-    i = 0;
-    while (i < all_cmd->nbrcmd - 1)
-        free(all_cmd->pipefd[i]);
-    free(all_cmd->pipefd);
+	i = -1;
+	if (all_cmd->nbrcmd > 1)
+	{
+		while (++i < (all_cmd->nbrcmd - 1))
+			free(all_cmd->pipefd[i]);
+		free(all_cmd->pipefd);
+	}
 }

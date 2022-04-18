@@ -8,7 +8,6 @@ int	search_variable(char **str)
 
 	i = 0;
 	tpm = ft_substr(*str, 1, ft_strlen(*str));
-	printf("%s\n", *str);
 	while (env[i] && ft_strncmp(tpm, env[i], ft_strlen(tpm)) != 0)
 		i++;
 	if (!env[i])
@@ -25,18 +24,3 @@ int	search_variable(char **str)
 	*str = ft_substr(env[i], j + 1, ft_strlen(env[i]));
 	return (1);
 }
-
-/*int	check_variable(t_lists **lst)
-{
-	t_lists	*tpm;
-
-	tpm = *lst;
-	while (*lst)
-	{
-		if ((*lst)->token->type == variable)
-			search_variable((*lst)->token);
-		*lst = (*lst)->next;
-	}
-	*lst = tpm;
-	return (0);
-}*/

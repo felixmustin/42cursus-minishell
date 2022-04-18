@@ -40,27 +40,38 @@ void set_env(char *type, char *pwd)
     }
 }
 
-void ex_cd(t_cmd *cmd)
+void exit_cd(t_all_cmd *all_cmd, int i)
+{
+    char *str;
+
+    str = ft_strjoin("minishell: cd: ", all_cmd->cmds[i].cmd[1]);
+    all_cmd->status = 1;
+    perror(str);
+    free(str);
+}
+
+void ex_cd(t_all_cmd *all_cmd, int i)
 {
 	int		ret;
 	char	*old_pwd;
 	char	*new_pwd;
 
-	old_pwd = getcwd(NULL, 0);
-	if (!cmd->cmd[1])
+    old_pwd = getcwd(NULL, 0);
+	if (!all_cmd->cmds[i].cmd[1])
     {
         new_pwd = get_home();
 		ret = chdir(new_pwd);
     }
     else
     {
-        ret = chdir(cmd->cmd[1]);
+        ret = chdir(all_cmd->cmds[i].cmd[1]);
         new_pwd = getcwd(NULL, 0);
     }
 	if (ret == -1)
-		return (perror("path"));
+        return (exit_cd(all_cmd, i));
     set_env("PWD", new_pwd);
-	set_env("OLDPWD", old_pwd); //
+	set_env("OLDPWD", old_pwd);
 	free(old_pwd);
 	free(new_pwd);
+    return ;
 }

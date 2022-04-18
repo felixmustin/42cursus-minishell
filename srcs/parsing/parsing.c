@@ -18,20 +18,6 @@ int	single_token(t_lists *lst)
 	return (1);
 }
 
-int	printf_token(t_lists *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst)
-	{
-		printf("content : [%s]\n", lst->token->content);
-		printf("type : %u\n", lst->token->type);
-		lst = lst->next;
-	}
-	return (1);
-}
-
 int	parsing(t_all_cmd *all_cmd, char *input, t_lists **lst)
 {
 	if (!check_quotes(input))
@@ -47,7 +33,6 @@ int	parsing(t_all_cmd *all_cmd, char *input, t_lists **lst)
 		return (0);
 	if (!parse_command(*lst))
 		return (0);
-	printf_token(*lst);
 	if (!set_cmd(all_cmd, *lst))
 	{
 		free_cmds(all_cmd);

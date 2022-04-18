@@ -6,12 +6,15 @@ SRCS	=	srcs/main.c \
 			srcs/builtins/exec_echo.c \
 			srcs/builtins/exec_env.c \
 			srcs/builtins/exec_export.c \
+			srcs/builtins/exec_export_2.c \
 			srcs/builtins/exec_pwd.c \
 			srcs/builtins/exec_unset.c \
+			srcs/builtins/exec_exit.c \
 			srcs/execution/execute.c \
 			srcs/execution/handle_pipe.c \
 			srcs/execution/handle_redir.c \
 			srcs/execution/pipe_utils.c \
+			srcs/execution/exit.c \
 			srcs/parsing/check_quotes.c \
 			srcs/parsing/check_quotes_2.c \
 			srcs/parsing/parse_command.c \
