@@ -1,31 +1,58 @@
 #include "../../includes/minishell.h"
 
-int	check_lst(t_lists *lst)
+int close_op(char **input, char *content)
 {
-	t_token_type	next;
-	t_token_type	prev;
+    char *tmp;
 
-	prev = lst->prev->token->type;
-	next = lst->next->token->type;
-	if ((prev != literal && prev != double_redir_left
-		&& prev != double_redir_right && prev != simple_redir_left
-		&& prev != simple_redir_right))
-		{
-			if ((next != literal && next != double_redir_left && next != double_redir_right
-				&& next != simple_redir_right && next != simple_redir_left))
-					return (0);
-		}
-	return (1);
+    tmp = ft_strdup(*input);
+	free(*input);
+	*input = NULL;
+	*input = ft_strjoin(tmp, content);
+    if (!*input)
+        return (0);
+    free(tmp);
+    return (1);
 }
 
-int	check_operator(t_lists *lst)
+int check_closed_op(char *line)
 {
-	while (lst)
+	int i;
+	int val;
+
+	i = 0;
+	val = 0;
+    while(line[i])   
 	{
-		if (lst->token->type == pipeline || lst->token->type == or || lst->token->type == and)
-			if (!check_lst(lst))
-				return (0);
-		lst = lst->next;
+		if (line[i] >= 33 && line[i] <= 126)
+			val = 1;
+		i++;
 	}
-	return (1);
+	return (val);
+}
+
+int unclosed_operator(char **input)
+{
+	char *content;
+	char *tmp;
+	char *line;
+
+	content = ft_strdup("\n");
+	ft_putstr("pipe>");
+    line = get_next_line(0);
+    while(line)
+    {
+		tmp = ft_strdup(content);
+		free(content);
+		content = NULL;
+		content = ft_strjoin(tmp, line);
+		free(tmp);
+		tmp = NULL;
+        if (check_closed_op(line))
+        	return (close_op(input, content));
+		ft_putstr("pipe>");
+        free(line);
+        line = get_next_line(0);
+    }
+    free(line);
+	return(close_op(input, content));
 }

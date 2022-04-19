@@ -1,40 +1,60 @@
 #include "../../includes/minishell.h"
 
-int	check_occurence(char *str, int i)
+int close_quotes(char **input, char *content)
 {
-	int	j;
+    char *tmp;
 
-	j = i + 1;
-	while (str[j] != '\0')
-	{
-		if (str[j] == str[i])
-			return (j);
-		j++;
-	}
-	return (-1);
+    tmp = ft_strdup(*input);
+	free(*input);
+	*input = NULL;
+	*input = ft_strjoin(tmp, content);
+    if (!*input)
+        return (0);
+    free(tmp);
+    return (1);
 }
 
-int	check_str(char *str)
+int check_closed_quote(char *line)
 {
-	int	i;
+    int count;
+    int i;
 
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == 34 || str[i] == 39)
-		{
-			i = check_occurence(str, i);
-			if (i == -1)
-				return (0);
-		}
-		i++;
+    count = 0;
+    i = -1;
+    while (line[++i])
+    {
+		if (line[i] == 34 || line[i] == 39)
+            count++;
 	}
-	return (1);
+    if (count % 2 == 0)
+        return (0);
+    else
+        return (1);
 }
 
-int	check_quotes(char *input)
+int unclosed_quotes(char **input)
 {
-	if (!check_str(input))
-		return (0);
-	return (1);
+	char *content;
+	char *tmp;
+	char *line;
+
+	content = ft_strdup("\n");
+	ft_putstr("quote>");
+    line = get_next_line(0);
+    while(line)
+    {
+		tmp = ft_strdup(content);
+		free(content);
+		content = NULL;
+		content = ft_strjoin(tmp, line);
+		free(tmp);
+		tmp = NULL;
+        if (check_closed_quote(line))
+            return (close_quotes(input, content));
+		ft_putstr("quote>");
+        free(line);
+        line = get_next_line(0);
+    }
+    free(line);
+	return(close_quotes(input, content));
 }

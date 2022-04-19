@@ -85,9 +85,10 @@ void	free_env(char **envv);
 int		env_len(char **envv);
 char	*new_prompt(void);
 //parsing
-int		check_quotes(char *input);
+int		check_quotes_op(char **input);
 int		unclosed_quotes(char **input);
-int		check_operator(t_lists *lst);
+int		check_operator(char **input, int i);
+int		unclosed_operator(char **input);
 int		parse_command(t_lists *lst);
 int		set_cmd(t_all_cmd *all_cmd, t_lists *lst);
 int		parsing(t_all_cmd *all_cmd, char **input, t_lists **lst, int status);
@@ -96,6 +97,7 @@ void	free_cmds(t_all_cmd *all_cmd);
 void	init_struct(t_cmd *cmd);
 int		count_cmd(t_lists *lst);
 int		get_type(char **str);
+int     print_syntax_error(char *str, int i);
 //token
 int		main_token(char *input, t_lists **lst, int status);
 t_token	*create_token(char *content, t_token_type type);
