@@ -1,9 +1,30 @@
 #include "../../includes/minishell.h"
 
+int	check_status(char **str, int status)
+{
+	char	*tpm;
+	int		i;
+
+	i = 0;
+	if (ft_strlen(*str) == 2)
+	{
+		if (ft_strncmp(*str, "$?", 2) == 0)
+		{
+			tpm = ft_itoa(status);
+			free(*str);
+			*str = NULL;
+			*str = ft_strdup(tpm);
+			free(tpm);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int	search_variable(char **str)
 {
 	int		i;
-	int		j;
+	size_t	j;
 	char	*tpm;
 
 	i = 0;
@@ -21,6 +42,10 @@ int	search_variable(char **str)
 		j++;
 	free(*str);
 	*str = NULL;
-	*str = ft_substr(env[i], j + 1, ft_strlen(env[i]));
+	if (j != ft_strlen(tpm))
+		*str = ft_strdup("");
+	else
+		*str = ft_substr(env[i], j + 1, ft_strlen(env[i]));
+	free(tpm);
 	return (1);
 }

@@ -41,7 +41,9 @@ int main(int argc, char **argv, char **envv)
     t_lists *lst;
     char *input;
     char *cwd;
+	int	status;
 
+	status = 0;
 	if (argc > 0 && argv)
 	{
     	init_env(envv);
@@ -54,9 +56,10 @@ int main(int argc, char **argv, char **envv)
     	        add_history(input);
     	    if (ft_strlen(input))
     	    {
-    	        if (parsing(&all_cmd, input, &lst))
+    	        if (parsing(&all_cmd, &input, &lst, status))
 				{
    	 	        	execute(&all_cmd);
+					status = all_cmd.status;
      		       	free_cmds(&all_cmd);
 				}
 				free_lst(&lst);

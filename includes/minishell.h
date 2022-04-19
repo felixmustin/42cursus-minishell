@@ -90,26 +90,27 @@ int		unclosed_quotes(char **input);
 int		check_operator(t_lists *lst);
 int		parse_command(t_lists *lst);
 int		set_cmd(t_all_cmd *all_cmd, t_lists *lst);
-int		parsing(t_all_cmd *all_cmd, char *input, t_lists **lst);
+int		parsing(t_all_cmd *all_cmd, char **input, t_lists **lst, int status);
 void	free_cmds(t_all_cmd *all_cmd);
 //parsing_utils
 void	init_struct(t_cmd *cmd);
 int		count_cmd(t_lists *lst);
 int		get_type(char **str);
 //token
-int		main_token(char *input, t_lists **lst);
+int		main_token(char *input, t_lists **lst, int status);
 t_token	*create_token(char *content, t_token_type type);
 int		token(char *input, t_lists **lst);
 t_lists	*newlst(t_token *token);
 void	add_back(t_lists **lst, t_lists *new);
 t_lists	*first_lst(t_lists *lst);
-int		second_token(t_lists **lst);
+int		second_token(t_lists **lst, int status);
 int		third_token(t_lists **lst);
 void	free_lst(t_lists **lst);
 int		delete_quotes(t_lists **lst);
 int		check_variable(t_lists **lst);
 int		search_variable(char **str);
 int		set_variable(t_lists **lst);
+int		check_status(char **str, int status);
 //parse_redir
 int		get_redir_l(t_token *token);
 int		get_redir_dl(t_token *token);
@@ -136,5 +137,7 @@ void    print_error(t_all_cmd *all_cmd, int j, int i);
 void    ex_unset(t_all_cmd *all_cmd, int i);
 void    ex_env(t_all_cmd *all_cmd, int i);
 char	**dup_env(void);
+//signal
+void	signal_handler(int sign);
 
 #endif

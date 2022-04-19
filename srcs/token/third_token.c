@@ -24,13 +24,22 @@ char	*new_content_literal(t_lists **lst)
 	*lst = (*lst)->next;
 	while (*lst && ((*lst)->token->type == literal || (*lst)->token->type == space || (*lst)->token->type == single_quote || (*lst)->token->type == double_quote || (*lst)->token->type == variable))
 	{
+		if ((*lst)->token->type == space)
+		{
+			tpm = ft_strdup(content);
+			free(content);
+			content = NULL;
+			content = ft_strjoin(tpm, split);
+			free(tpm);
+			tpm = NULL;
+		}
 		if ((*lst)->token->type != space)
 		{
 			tpm = ft_strdup((*lst)->token->content);
 			tpm1 = ft_strjoin(content, tpm);
 			free(content);
 			content = NULL;
-			content = ft_strjoin(tpm1, split);
+			content = ft_strdup(tpm1);
 			free(tpm);
 			free(tpm1);
 			tpm = NULL;
@@ -105,9 +114,6 @@ int	set_third_token(t_lists **lst, t_lists **newlist)
 	{
 		if (type == literal || type == variable || type == single_quote || type == double_quote)
 		{
-			//if (i == 0)
-			//	content = ft_strdup((*lst)->token->content);
-			//else
 			content = new_content_literal(lst);
 			type = literal;
 			token = create_token(content, type);
