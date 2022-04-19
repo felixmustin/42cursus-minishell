@@ -14,23 +14,6 @@ int	check_quote_occurence(char *str, int i)
 	return (-1);
 }
 
-/*int	check_quote(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == 34 || str[i] == 39)
-		{
-			i = check_occurence(str, i);
-			if (i == -1)
-				return (0);
-		}
-		i++;
-	}
-	return (1);
-}*/
 
 int	check_operator(char **str, int i)
 {
@@ -85,15 +68,3 @@ int check_quotes_op(char **str)
 	}
 	return (1);
 }
-
-/*int	check_quotes_op(char *input)
-{
-	if (!check_quote(input))
-		return (unclosed_quotes(input));
-	ret = check_operator(input, -1);
-	if (ret == 0)
-		return (unclosed_quotes(input));
-	if (ret == 1)
-		return(unclosed_operator(input));
-	return (1);
-}*/
