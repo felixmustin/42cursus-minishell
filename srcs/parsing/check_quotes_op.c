@@ -42,8 +42,9 @@ int	check_operator(char **str, int i)
 	return (2);
 }
 
-int check_quotes_op(char **str)
+int check_quotes_op(char **str, t_all_cmd *all_cmd)
 {
+	(void) all_cmd;
 	int i;
 	int ret;
 
@@ -62,7 +63,8 @@ int check_quotes_op(char **str)
 			if (ret == 0)
 				return(0);
 			if (ret == 1)
-				unclosed_operator(str);
+				if(!unclosed_operator(str))
+					return(0);
 		}
 		i++;
 	}

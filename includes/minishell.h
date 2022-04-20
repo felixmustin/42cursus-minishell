@@ -12,6 +12,7 @@
 #include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdbool.h> 
 #include "../libft/libft.h"
 #include "../get_next_line/get_next_line.h"
 
@@ -85,34 +86,35 @@ void	free_env(char **envv);
 int		env_len(char **envv);
 char	*new_prompt(void);
 //parsing
-int		check_quotes_op(char **input);
+int		check_quotes_op(char **input, t_all_cmd *all_cmd);
 int		unclosed_quotes(char **input);
 int		check_operator(char **input, int i);
 int		unclosed_operator(char **input);
 int		parse_command(t_lists *lst);
 int		set_cmd(t_all_cmd *all_cmd, t_lists *lst);
-int		parsing(t_all_cmd *all_cmd, char **input, t_lists **lst, int status);
+int		parsing(t_all_cmd *all_cmd, char **input, t_lists **lst);
 void	free_cmds(t_all_cmd *all_cmd);
 //parsing_utils
 void	init_struct(t_cmd *cmd);
 int		count_cmd(t_lists *lst);
 int		get_type(char **str);
 int     print_syntax_error(char *str, int i);
+void ft_free(char *str);
 //token
-int		main_token(char *input, t_lists **lst, int status);
+int		main_token(char *input, t_lists **lst);
 t_token	*create_token(char *content, t_token_type type);
 int		token(char *input, t_lists **lst);
 t_lists	*newlst(t_token *token);
 void	add_back(t_lists **lst, t_lists *new);
 t_lists	*first_lst(t_lists *lst);
-int		second_token(t_lists **lst, int status);
+int		second_token(t_lists **lst);
 int		third_token(t_lists **lst);
 void	free_lst(t_lists **lst);
 int		delete_quotes(t_lists **lst);
 int		check_variable(t_lists **lst);
 int		search_variable(char **str);
 int		set_variable(t_lists **lst);
-int		check_status(char **str, int status);
+int		check_status(char **str);
 //parse_redir
 int		get_redir_l(t_token *token);
 int		get_redir_dl(t_token *token);
@@ -140,6 +142,9 @@ void    ex_unset(t_all_cmd *all_cmd, int i);
 void    ex_env(t_all_cmd *all_cmd, int i);
 char	**dup_env(void);
 //signal
-void	signal_handler(int sign);
+void	cmd_signals(void);
+void	global_signals(void);
+void    set_sig_code(int err_code);
+int get_sig_code(void);
 
 #endif

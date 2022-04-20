@@ -48,6 +48,7 @@ void execute(t_all_cmd *all_cmd)
     int i;
     
     i = -1;
+    cmd_signals();
     if (all_cmd->nbrcmd > 1)
         init_pipes(all_cmd);
     else if (all_cmd->nbrcmd == 1 && all_cmd->cmds[0].type > 0)

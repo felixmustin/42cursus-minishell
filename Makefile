@@ -2,6 +2,8 @@ SRCS	=	srcs/main.c \
 			srcs/utils.c \
 			srcs/prompt.c \
 			srcs/env.c \
+			srcs/signal.c \
+			srcs/sig_code.c \
 			srcs/builtins/exec_cd.c \
 			srcs/builtins/exec_echo.c \
 			srcs/builtins/exec_env.c \
@@ -40,7 +42,7 @@ NAME		= minishell
 LIBFT_DIR	= libft/
 LIBFT		= ${LIBFT_DIR}libft.a
 CC			= gcc
-CCFLAGS		= -Wall -Wextra -Werror -I${INCL} -I${LIBFT_DIR}
+CCFLAGS		= -Wall -Wextra -Werror -I${INCL} -I${LIBFT_DIR} -fsanitize=address
 
 %.o: %.c
 	$(CC) $(CCFLAGS) -I/usr/local/opt/readline/include -c $< -o $@

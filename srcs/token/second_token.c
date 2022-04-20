@@ -26,20 +26,20 @@ char	*new_content(t_lists **lst)
 	return (content);
 }
 
-char	*new_content_varaible(t_lists **lst, int status)
+char	*new_content_varaible(t_lists **lst)
 {
 	t_token_type	type;
 	char			*content;
 	
 	type = variable;
 	content = ft_strdup((*lst)->token->content);
-	if (!check_status(&content, status))
+	if (!check_status(&content))
 		search_variable(&content);
 	*lst = (*lst)->next;
 	return (content);
 }
 
-char	*new_content_quotes(t_lists **lst, t_token_type type, int status)
+char	*new_content_quotes(t_lists **lst, t_token_type type)
 {
 	char	*content;
 	char	*tpm;
@@ -53,7 +53,7 @@ char	*new_content_quotes(t_lists **lst, t_token_type type, int status)
 	{
 		tpm = ft_strdup((*lst)->token->content);
 		if (type == double_quote && (*lst)->token->type == variable)
-			if (!check_status(&tpm, status))
+			if (!check_status(&tpm))
 				search_variable(&tpm);
 		tpm1 = ft_strjoin(content, tpm);
 		free(content);
@@ -86,7 +86,7 @@ t_token_type	check_double(char *content, t_token_type type)
 	return (type);
 }
 
-int	set_second_token(t_lists **lst, t_lists **newlist, int status)
+int	set_second_token(t_lists **lst, t_lists **newlist)
 {
 	char			*content;
 	t_token			*token;
@@ -95,9 +95,9 @@ int	set_second_token(t_lists **lst, t_lists **newlist, int status)
 
 	type = (*lst)->token->type;
 	if (type == variable)
-		content = new_content_varaible(lst, status);
+		content = new_content_varaible(lst);
 	if (type == single_quote || type == double_quote)
-		content = new_content_quotes(lst, type, status);
+		content = new_content_quotes(lst, type);
 	if (type != variable && type != double_quote && type != single_quote)
 		content = new_content(lst);
 	type = check_double(content, type);
@@ -107,13 +107,13 @@ int	set_second_token(t_lists **lst, t_lists **newlist, int status)
 	return (1);
 }
 
-int	second_token(t_lists **lst, int status)
+int	second_token(t_lists **lst)
 {
 	t_lists	*new;
 
 	new = NULL;
 	while (*lst)
-		set_second_token(lst, &new, status);
+		set_second_token(lst, &new);
 	*lst = first_lst(new);
 	return (1);
 }

@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-int	check_status(char **str, int status)
+int	check_status(char **str)
 {
 	char	*tpm;
 	int		i;
@@ -10,7 +10,7 @@ int	check_status(char **str, int status)
 	{
 		if (ft_strncmp(*str, "$?", 2) == 0)
 		{
-			tpm = ft_itoa(status);
+			tpm = ft_itoa(get_sig_code());
 			free(*str);
 			*str = NULL;
 			*str = ft_strdup(tpm);

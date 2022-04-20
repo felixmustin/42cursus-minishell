@@ -41,18 +41,19 @@ int unclosed_operator(char **input)
     line = get_next_line(0);
     while(line)
     {
+		if (get_sig_code())
+            return (0);
 		tmp = ft_strdup(content);
-		free(content);
-		content = NULL;
+		ft_free(content);
 		content = ft_strjoin(tmp, line);
-		free(tmp);
+		ft_free(tmp);
 		tmp = NULL;
         if (check_closed_op(line))
         	return (close_op(input, content));
 		ft_putstr("pipe>");
-        free(line);
+        ft_free(line);
         line = get_next_line(0);
     }
-    free(line);
+    ft_free(line);
 	return(close_op(input, content));
 }

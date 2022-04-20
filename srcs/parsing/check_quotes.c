@@ -43,18 +43,18 @@ int unclosed_quotes(char **input)
     line = get_next_line(0);
     while(line)
     {
+        if (get_sig_code())
+            return (0);
 		tmp = ft_strdup(content);
-		free(content);
-		content = NULL;
+        ft_free(content);
 		content = ft_strjoin(tmp, line);
-		free(tmp);
-		tmp = NULL;
+        ft_free(tmp);
         if (check_closed_quote(line))
             return (close_quotes(input, content));
 		ft_putstr("quote>");
-        free(line);
+        ft_free(line);
         line = get_next_line(0);
     }
-    free(line);
+    ft_free(line);
 	return(close_quotes(input, content));
 }

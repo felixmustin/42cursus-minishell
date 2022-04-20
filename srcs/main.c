@@ -1,16 +1,5 @@
 #include "../includes/minishell.h"
 
-void signal_handler(int sign)
-{
-    if (sign == SIGINT)
-    {
-        ft_putstr_fd("\n", 0);
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-    }
-}
-
 void free_cmds(t_all_cmd *all_cmd)
 {
     int i;
@@ -35,39 +24,47 @@ void free_cmds(t_all_cmd *all_cmd)
     free(all_cmd->cmds);
 }
 
-int main(int argc, char **argv, char **envv)
+void main_exec(char **input, t_lists **lst)
 {
     t_all_cmd all_cmd;
-    t_lists *lst;
+
+    if (ft_strlen(*input) > 0)
+    	add_history(*input);
+    if (ft_strlen(*input))
+    {
+    	if (parsing(&all_cmd, input, lst))
+		{
+   	 	    execute(&all_cmd);
+			set_sig_code(all_cmd.status);
+     		free_cmds(&all_cmd);
+		}
+		free_lst(lst);
+   	}
+}
+
+
+int main(int argc, char **argv, char **envv)
+{
     char *input;
+    t_lists *lst;
     char *cwd;
 	int	status;
 
-	status = 0;
 	if (argc > 0 && argv)
 	{
+        global_signals();
     	init_env(envv);
-    	signal(SIGINT, signal_handler);
-    	cwd = new_prompt();
+        status = 0;
     	lst = NULL;
+    	cwd = new_prompt();
     	while ((input = readline(cwd)) != NULL)
-    	{
-    	    if (ft_strlen(input) > 0)
-    	        add_history(input);
-    	    if (ft_strlen(input))
-    	    {
-    	        if (parsing(&all_cmd, &input, &lst, status))
-				{
-   	 	        	execute(&all_cmd);
-					status = all_cmd.status;
-     		       	free_cmds(&all_cmd);
-				}
-				free_lst(&lst);
-   	     	}
-        	free(input);
-            free(cwd);
+        {
+            main_exec(&input, &lst);
+            ft_free(input);
+            ft_free(cwd);
             cwd = new_prompt();
-    	}
+            global_signals();
+        }
     	free_env(env);
 	}
 }
