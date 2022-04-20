@@ -5,8 +5,8 @@ int get_redir_l(t_token *token)
     int fd;
 
     fd = open(token->content, O_RDONLY);
-    if (!fd)
-        return (0);
+    if (fd == -1)
+        printf("minishell: %s: No such file or directory\n", token->content);
     return (fd);
 }
 
@@ -18,12 +18,14 @@ int get_redir_dl(t_token *token)
 
     fd = open("heredoc", O_CREAT | O_RDWR | O_TRUNC, 0666); //delete after
     if (!fd)
-        return (0);
+        return (-1);
     size = ft_strlen(token->content);
     ft_putstr("heredoc>");
     line = get_next_line(0);
     while(line)
     {
+        if (get_sig_code())
+            return (-1);
         if (!strncmp(line, token->content, size))
             break ;
         ft_putstr("heredoc>");
@@ -42,8 +44,6 @@ int get_redir_r(t_token *token)
     int fd;
     
     fd = open(token->content, O_CREAT | O_RDWR | O_TRUNC, 0666);
-    if (!fd)
-        return (0);
     return (fd);
 }
 

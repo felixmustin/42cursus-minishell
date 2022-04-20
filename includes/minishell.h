@@ -67,6 +67,7 @@ typedef struct s_cmd
     int		pipe_o; //0:no  1: | 2:&&  3:||
     int		saved_stdin;
     int		saved_stdout;
+    int     f_redir;
 } t_cmd;
 
 typedef struct s_all_cmd
@@ -86,7 +87,7 @@ void	free_env(char **envv);
 int		env_len(char **envv);
 char	*new_prompt(void);
 //parsing
-int		check_quotes_op(char **input, t_all_cmd *all_cmd);
+int		check_quotes_op(char **input);
 int		unclosed_quotes(char **input);
 int		check_operator(char **input, int i);
 int		unclosed_operator(char **input);
@@ -127,8 +128,8 @@ void	free_pipe(t_all_cmd *all_cmd);
 //execution
 void	execute(t_all_cmd *all_cmd);
 void	handle_pipe(t_all_cmd *all_cmd, int i);
-void	handle_redir(t_cmd *cmd);
-void    handle_redir_fork(t_cmd *cmd);
+int     handle_redir(t_all_cmd *cmd, int i);
+int     handle_redir_fork(t_cmd *cmd);
 void    exit_cmds(t_all_cmd *all_cmd, int i);
 //builtins
 void    ex_exit(t_all_cmd *all_cmd, int i);

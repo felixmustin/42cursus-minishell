@@ -42,7 +42,7 @@ NAME		= minishell
 LIBFT_DIR	= libft/
 LIBFT		= ${LIBFT_DIR}libft.a
 CC			= gcc
-CCFLAGS		= -Wall -Wextra -Werror -I${INCL} -I${LIBFT_DIR} -fsanitize=address
+CCFLAGS		= -Wall -Wextra -Werror -I${INCL} -I${LIBFT_DIR} -fsanitize=address -g
 
 %.o: %.c
 	$(CC) $(CCFLAGS) -I/usr/local/opt/readline/include -c $< -o $@

@@ -48,13 +48,11 @@ int main(int argc, char **argv, char **envv)
     char *input;
     t_lists *lst;
     char *cwd;
-	int	status;
 
 	if (argc > 0 && argv)
 	{
         global_signals();
     	init_env(envv);
-        status = 0;
     	lst = NULL;
     	cwd = new_prompt();
     	while ((input = readline(cwd)) != NULL)

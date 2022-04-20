@@ -40,24 +40,23 @@ int set_path(char **cmd)
     str = ft_substr(env[i], 5, ft_strlen(env[i]));
     tpm = ft_split(str, ':');
     i = 0;
+    if (!tpm)
+        return (0);
     while (tpm[i])
         i++;
     path = malloc(sizeof(char *) * (i + 1));
 	if (!path)
 		return (0);
-    i = 0;
-    while (tpm[i])
-    {
+    i = -1;
+    while (tpm[++i])
         path[i] = ft_strjoin(tpm[i], *cmd);
-        i++;
-    }
     path[i] = NULL;
     i = check_acces(path);
     if (i == -1)
         return (0);
-    free(*cmd);
-    *cmd = NULL;
+    ft_free(*cmd);
     *cmd = ft_strdup(path[i]);
+    free_env(path);
     return (1);
 }
 

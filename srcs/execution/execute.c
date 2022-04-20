@@ -2,8 +2,13 @@
 
 void execute_builtin(t_all_cmd *all_cmd, int i)
 {
+    int ret;
+
+    ret = -1;
     if (all_cmd->cmds[i].pipe_i == 0 && all_cmd->cmds[i].pipe_o == 0)
-        handle_redir(&all_cmd->cmds[i]);
+        ret = handle_redir(all_cmd, i);
+    if (ret != -1)
+        return ;
     if (all_cmd->cmds[i].type == 1)
         ex_echo(all_cmd, i);
     else if (all_cmd->cmds[i].type == 2)
@@ -24,8 +29,13 @@ void execute_builtin(t_all_cmd *all_cmd, int i)
 
 void execute_child_cmd(t_all_cmd *all_cmd, int i)
 {
+    int ret;
+
+    ret = -1;
     handle_pipe(all_cmd, i);
-    handle_redir_fork(&all_cmd->cmds[i]);
+    ret = handle_redir_fork(&all_cmd->cmds[i]);
+    if (ret != -1)
+        exit(ret);
     close_pipes(all_cmd);
     if (all_cmd->cmds[i].type > 0)
         execute_builtin(all_cmd, i);

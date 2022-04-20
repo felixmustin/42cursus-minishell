@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-struct s_cmd get_pipe(t_cmd cmd, t_token *token)
+t_cmd close_cmd(t_cmd cmd, t_token *token)
 {
     if (token->type == pipeline)
         cmd.pipe_o = 1; 
@@ -8,6 +8,8 @@ struct s_cmd get_pipe(t_cmd cmd, t_token *token)
         cmd.pipe_o = 2;
     if (token->type == or)
         cmd.pipe_o = 3;
+    if (cmd.fd_i == -1 || cmd.fd_o == -1)
+        cmd.f_redir = 1;
     return (cmd);
 }
 
@@ -37,7 +39,7 @@ t_lists *move_lst(t_lists *lst, int i)
     return (lst);
 }
 
-struct s_cmd parse_cmds(t_lists *lst, int i)
+t_cmd parse_cmds(t_lists *lst, int i)
 {
     t_cmd full_cmd;
 
@@ -57,7 +59,7 @@ struct s_cmd parse_cmds(t_lists *lst, int i)
         else if (lst->token->type == double_redir_left)
             full_cmd.fd_i = get_redir_dl(lst->token);
         else if (lst->token->type == pipeline || lst->token->type == and || lst->token->type == or)
-            return(get_pipe(full_cmd, lst->token));
+            return(close_cmd(full_cmd, lst->token));
         lst = lst->next;
     }
     return (full_cmd);
@@ -75,6 +77,8 @@ int set_cmd(t_all_cmd *all_cmd, t_lists *lst)
     while (i < all_cmd->nbrcmd)
     {
         all_cmd->cmds[i] = parse_cmds(lst, i);
+        if (all_cmd->cmds[i].f_redir)
+            return (0);
         if (i > 0)
             all_cmd->cmds[i].pipe_i = all_cmd->cmds[i - 1].pipe_o;
         i++;

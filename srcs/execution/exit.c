@@ -54,7 +54,7 @@ void status_child(t_all_cmd *all_cmd, int j, int status)
         all_cmd->status = tmp;
     else
     {
-        if (tmp == 1)
+        if (tmp == 1 || tmp == 9)
             all_cmd->status = 1;
         else if (tmp == 2)
             all_cmd->status = 127;
