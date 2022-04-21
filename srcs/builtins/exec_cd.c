@@ -3,8 +3,8 @@
 char	*get_home(void)
 {
 	char	*home;
-	int	len;
-	int	i;
+	int		len;
+	int		i;
 
 	i = -1;
 	while (env[++i])
@@ -53,7 +53,7 @@ void	exit_cd(t_all_cmd *all_cmd, int i)
 
 void	ex_cd(t_all_cmd *all_cmd, int i)
 {
-	int		ret;
+	int			ret;
 	char		*old_pwd;
 	char		*new_pwd;
 
