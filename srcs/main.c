@@ -42,7 +42,6 @@ void main_exec(char **input, t_lists **lst)
    	}
 }
 
-
 int main(int argc, char **argv, char **envv)
 {
     char *input;
@@ -57,6 +56,7 @@ int main(int argc, char **argv, char **envv)
     	cwd = new_prompt();
     	while ((input = readline(cwd)) != NULL)
         {
+            set_sig_code(0);
             main_exec(&input, &lst);
             ft_free(input);
             ft_free(cwd);
