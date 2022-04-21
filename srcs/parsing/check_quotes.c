@@ -38,6 +38,7 @@ int unclosed_quotes(char **input)
 	char *tmp;
 	char *line;
 
+    input_signals();
 	content = ft_strdup("\n");
 	ft_putstr("quote>");
     line = get_next_line(0);

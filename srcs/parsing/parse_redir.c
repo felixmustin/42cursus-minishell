@@ -16,6 +16,7 @@ int get_redir_dl(t_token *token)
     int size;
     int fd;
 
+    input_signals();
     fd = open("heredoc", O_CREAT | O_RDWR | O_TRUNC, 0666); //delete after
     if (!fd)
         return (-1);

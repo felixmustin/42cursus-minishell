@@ -20,7 +20,7 @@ int	single_token(t_lists *lst)
 
 int	parsing(t_all_cmd *all_cmd, char **input, t_lists **lst)
 {
-	if (!check_quotes_op(input, all_cmd))
+	if (!check_quotes_op(input))
 		return (0);
 	if (!main_token(*input, lst))
 		return (0);
