@@ -53,28 +53,12 @@ char	*new_content_literal(t_lists **lst)
 char	*new_content_redir(t_lists **lst)
 {
 	char	*content;
-	char	*tpm;
-	char	*tpm1;
 
 	content = NULL;
-	while ((*lst)->token->type != literal && lst)
+	while (*lst && (*lst)->token->type != literal && (*lst)->token->type != single_quote && (*lst)->token->type != double_quote)
 		*lst = (*lst)->next;
-	if (lst)
-		content = ft_strdup((*lst)->token->content);
+	content = ft_strdup((*lst)->token->content);
 	*lst = (*lst)->next;
-	while (*lst && (*lst)->token->type == literal)
-	{
-		tpm = ft_strdup((*lst)->token->content);
-		tpm1 = ft_strjoin(content, tpm);
-		free(content);
-		content = NULL;
-		content = ft_strdup(tpm1);
-		free(tpm);
-		free(tpm1);
-		tpm = NULL;
-		tpm1 = NULL;
-		*lst = (*lst)->next;
-	}
 	return (content);
 }
 

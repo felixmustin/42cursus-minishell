@@ -42,6 +42,40 @@ int	check_operator(char **str, int i)
 	return (2);
 }
 
+int	check_redir(char *str, int i)
+{
+	int	count;
+	int	j;
+
+	count = 0;
+	j = i;
+	while (str[i] != '\0' && (str[i] == 32 || str[i] == str[j]))
+	{
+		if (str[i] == str[j])
+			count++;
+		i++;
+	}
+	if (count > 2)
+	{
+		print_syntax_error(str, j);
+		return (0);
+	}
+	if (str[i] == '\0' || str[i] == '#' || str[i] == '&' || str[i] == '|' || str[i] == ')' || str[i] == ')')
+	{
+		if (str[i] == '\0' || str[i] == '#')
+			print_syntax_error("\n", 0);
+		else
+			print_syntax_error(str, i);
+		return (0);
+	}
+	if (str[i] == '*')
+	{
+		printf("bash ambiguous redirect\n");
+		return (0);
+	}
+	return (1);
+}
+
 int check_quotes_op(char **str)
 {
 	int i;
@@ -64,6 +98,11 @@ int check_quotes_op(char **str)
 			if (ret == 1)
 				if(!unclosed_operator(str))
 					return(0);
+		}
+		if ((*str)[i] == 62 || (*str)[i] == 60)
+		{
+			if (!check_redir(*str, i))
+				return (0);
 		}
 		i++;
 	}

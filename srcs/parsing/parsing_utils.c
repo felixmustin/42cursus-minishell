@@ -46,7 +46,10 @@ int get_type(char **str)
 
 int print_syntax_error(char *str, int i)
 {
-	printf("minishell: syntax error near unexpected token `%c'\n", str[i]);
+	if (ft_strncmp(str, "\n", 1) == 0)
+		printf("minishell: syntax error near unexpected token `newline'\n");
+	else
+		printf("minishell: syntax error near unexpected token `%c'\n", str[i]);
 	return (0);
 }
 
