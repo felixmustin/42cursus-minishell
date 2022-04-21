@@ -51,7 +51,7 @@ int main(int argc, char **argv, char **envv)
 
 	if (argc > 0 && argv)
 	{
-        global_signals();
+        cmd_signals(0);
     	init_env(envv);
     	lst = NULL;
     	cwd = new_prompt();
@@ -61,7 +61,7 @@ int main(int argc, char **argv, char **envv)
             ft_free(input);
             ft_free(cwd);
             cwd = new_prompt();
-            global_signals();
+            cmd_signals(0);
         }
     	free_env(env);
 	}
