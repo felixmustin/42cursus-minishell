@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#include <sys/ioctl.h>
+#include <termios.h> 
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -131,6 +133,9 @@ void	handle_pipe(t_all_cmd *all_cmd, int i);
 int     handle_redir(t_all_cmd *cmd, int i);
 int     handle_redir_fork(t_cmd *cmd);
 void    exit_cmds(t_all_cmd *all_cmd, int i);
+//exit
+void	wait_pid(t_all_cmd *all_cmd, int i);
+void	close_fd(t_all_cmd *all_cmd);
 //builtins
 void    ex_exit(t_all_cmd *all_cmd, int i);
 void    ex_echo(t_all_cmd *all_cmd, int i);
@@ -143,8 +148,9 @@ void    ex_unset(t_all_cmd *all_cmd, int i);
 void    ex_env(t_all_cmd *all_cmd, int i);
 char	**dup_env(void);
 //signal
-void	cmd_signals(void);
-void	global_signals(void);
+void	cmd_signals(int i);
+//void	global_signals(void);
+void	input_signals(void);
 void    set_sig_code(int err_code);
 int get_sig_code(void);
 
