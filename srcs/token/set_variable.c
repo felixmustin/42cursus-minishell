@@ -52,6 +52,7 @@ int	set_variable(t_lists **lst)
 	new = NULL;
 	while (*lst)
 		set_content(lst, &new);
+	free_lst(lst);
 	*lst = first_lst(new);
 	return (0);
 }

@@ -114,6 +114,7 @@ int	second_token(t_lists **lst)
 	new = NULL;
 	while (*lst)
 		set_second_token(lst, &new);
+	free_lst(lst);
 	*lst = first_lst(new);
 	return (1);
 }

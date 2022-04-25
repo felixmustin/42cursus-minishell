@@ -68,8 +68,12 @@ int check_cmd(t_token *token)
     int     i;
 
     i = 0;
-    while (token->content[i] != '\0' && token->content[i] != 32 && token->content[i] != -1)
+	if (!ft_strncmp(token->content, ".", ft_strlen(token->content) - 1) || !ft_strncmp(token->content, "/", ft_strlen(token->content) - 1))
+		return (0);
+	while (token->content[i] != '\0' && token->content[i] != 32 && token->content[i] != -1)
         i++;
+	if (i == 0)
+		return (0);
     tpm = ft_substr(token->content, 0, i);
     cmd = ft_strjoin("/", tpm);
     if (!set_path(&cmd))

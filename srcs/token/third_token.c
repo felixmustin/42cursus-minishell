@@ -127,17 +127,11 @@ int	set_third_token(t_lists **lst, t_lists **newlist)
 int third_token(t_lists **lst)
 {
 	t_lists	*new;
-	int		i;
 
 	new = NULL;
-	i = 0;
 	while (*lst)
-	{
 		set_third_token(lst, &new);
-		//if (i == 0)
-		//	*lst = (*lst)->next;
-		i++;
-	}
+	free_lst(lst);
 	*lst = first_lst(new);
 	return (1);
 }

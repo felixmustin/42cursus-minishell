@@ -6,6 +6,8 @@ int	single_token(t_lists *lst)
 	t_token_type	type;
 
 	i = 0;
+	if (!lst)
+		return (0);
 	type = lst->token->type;
 	while (lst)
 	{

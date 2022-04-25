@@ -45,14 +45,22 @@ int	check_operator(char **str, int i)
 int	check_redir(char *str, int i)
 {
 	int	count;
+	int	space;
 	int	j;
 
 	count = 0;
 	j = i;
+	space = 0;
 	while (str[i] != '\0' && (str[i] == 32 || str[i] == str[j]))
 	{
 		if (str[i] == str[j])
+		{
 			count++;
+			if (count > 1 && space > 0)
+				count = 3;
+		}
+		if (str[i] == 32)
+			space++;
 		i++;
 	}
 	if (count > 2)
