@@ -24,13 +24,13 @@ t_lists	*first_lst(t_lists *lst)
 	return (lst);
 }
 
-t_lists    *last_lst(t_lists *lst)
+t_lists	*last_lst(t_lists *lst)
 {
-    if (!lst)
-        return (NULL);
-    while (lst->next)
-        lst = lst->next;
-    return (lst);
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }
 
 void	add_back(t_lists **lst, t_lists *new)

@@ -34,6 +34,7 @@ SRCS	=	srcs/main.c \
 			srcs/token/check_variable.c \
 			srcs/token/delete_quotes.c \
 			srcs/token/set_variable.c \
+			srcs/token/token_utils.c \
 			get_next_line/get_next_line.c \
 
 INCL		= includes/minishell.h

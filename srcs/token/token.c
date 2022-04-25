@@ -27,7 +27,8 @@ t_token_type	define_type(char c)
 		type = simple_redir_left;
 	if (c == '$')
 		type = variable;
-	if (c == ' ' || c == '\f' || c == '\n' || c == '\v' || c == '\t' || c == '\r')
+	if (c == ' ' || c == '\f' || c == '\n'
+		|| c == '\v' || c == '\t' || c == '\r')
 		type = space;
 	if (c == 34)
 		type = double_quote;

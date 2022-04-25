@@ -15,12 +15,9 @@ char	*new_content(t_lists **lst)
 		tpm = ft_strdup((*lst)->token->content);
 		tpm1 = ft_strjoin(content, tpm);
 		free(content);
-		content = NULL;
 		content = ft_strdup(tpm1);
 		free(tpm1);
 		free(tpm);
-		tpm1 = NULL;
-		tpm = NULL;  
 		*lst = (*lst)->next;
 	}
 	return (content);
@@ -30,7 +27,7 @@ char	*new_content_varaible(t_lists **lst)
 {
 	t_token_type	type;
 	char			*content;
-	
+
 	type = variable;
 	content = ft_strdup((*lst)->token->content);
 	if (!check_status(&content))
@@ -57,33 +54,14 @@ char	*new_content_quotes(t_lists **lst, t_token_type type)
 				search_variable(&tpm);
 		tpm1 = ft_strjoin(content, tpm);
 		free(content);
-		content = NULL;
 		content = ft_strdup(tpm1);
 		free(tpm1);
-		tpm1 = NULL;
 		free(tpm);
-		tpm = NULL;
 		if ((*lst)->token->type == type)
 			quotes = 1;
 		*lst = (*lst)->next;
 	}
 	return (content);
-}
-
-t_token_type	check_double(char *content, t_token_type type)
-{
-	if (ft_strlen(content) >= 2)
-	{
-		if (content[0] == '>' && content[1] == '>')
-			type = double_redir_right;
-		if (content[0] == '<' && content[1] == '<')
-			type = double_redir_left;
-		if (content[0] == '|' && content[1] == '|')
-			type = or;
-		if (content[0] == '&' && content[1] == '&')
-			type = and;
-	}
-	return (type);
 }
 
 int	set_second_token(t_lists **lst, t_lists **newlist)

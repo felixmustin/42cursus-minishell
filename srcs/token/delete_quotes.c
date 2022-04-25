@@ -55,7 +55,7 @@ int	delete_single_quotes(t_token *token)
 
 int	delete_quotes(t_lists **lst)
 {
-	t_lists *tpm;
+	t_lists	*tpm;
 
 	tpm = *lst;
 	while (*lst)

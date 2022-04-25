@@ -8,7 +8,10 @@ char	*fill_variable(t_lists **lst)
 
 	str = ft_strdup((*lst)->token->content);
 	*lst = (*lst)->next;
-	while (*lst && (*lst)->token->type != space && (*lst)->token->type != variable && (*lst)->token->type != double_quote)
+	while (*lst && (*lst)->token->type != space
+		&& (*lst)->token->type != variable
+		&& (*lst)->token->type != double_quote
+		&& (*lst)->token->type != single_quote)
 	{
 		tpm = ft_strdup((*lst)->token->content);
 		tpm1 = ft_strjoin(str, tpm);
@@ -56,4 +59,3 @@ int	set_variable(t_lists **lst)
 	*lst = first_lst(new);
 	return (0);
 }
-

@@ -118,6 +118,12 @@ int		check_variable(t_lists **lst);
 int		search_variable(char **str);
 int		set_variable(t_lists **lst);
 int		check_status(char **str);
+t_token_type	check_double(char *content, t_token_type type);
+char	*set_split(char c);
+char	*fill_content_literal(char	*content, t_lists **lst, char *split);
+int		fill_content(t_lists **lst, t_lists **newlist, t_token_type type);
+char	*new_content_redir(t_lists **lst);
+char	*new_content_literal(t_lists **lst);
 //parse_redir
 int		get_redir_l(t_token *token);
 int		get_redir_dl(t_token *token);
