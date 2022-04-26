@@ -55,7 +55,7 @@ int	ft_atoi_dif(const char *str)
 
 void	exit_with_free(t_all_cmd *all_cmd, int val)
 {
-	if (all_cmd->pids)
+	if (all_cmd->nbrcmd > 1)
 		free(all_cmd->pids);
 	free_env(env);
 	free_cmds(all_cmd);
