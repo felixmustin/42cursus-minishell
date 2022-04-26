@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   third_token.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmillet <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/26 12:22:21 by cmillet           #+#    #+#             */
+/*   Updated: 2022/04/26 12:22:23 by cmillet          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	*new_content_literal(t_lists **lst)
@@ -6,15 +18,17 @@ char	*new_content_literal(t_lists **lst)
 	char			*split;
 
 	split = set_split(-1);
-	content = ft_strjoin((*lst)->token->content, split);
+	content = ft_strdup((*lst)->token->content);
 	*lst = (*lst)->next;
 	while (*lst && ((*lst)->token->type == literal
 			|| (*lst)->token->type == space
 			|| (*lst)->token->type == single_quote
 			|| (*lst)->token->type == double_quote
-			|| (*lst)->token->type == variable))
+			|| (*lst)->token->type == variable
+			|| (*lst)->token->type == undesirable))
 	{
-		content = fill_content_literal(content, lst, split);
+		if ((*lst)->token->type != undesirable)
+			content = fill_content_literal(content, lst, split);
 		*lst = (*lst)->next;
 	}
 	return (content);
