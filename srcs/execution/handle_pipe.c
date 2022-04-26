@@ -35,7 +35,3 @@ void	handle_pipe(t_all_cmd *all_cmd, int i)
 	if (all_cmd->cmds[i].pipe_i == 1 || all_cmd->cmds[i].pipe_o == 1)
 		handle_pipe_1(&all_cmd->cmds[i], all_cmd->pipefd, i);
 }
-/*if (all_cmd[i].cmds->type_pipe == 2)
-    handle_pipe_2();
-if (all_cmd[i].cmds->type_pipe == 3)
-    handle_pipe_3();*/

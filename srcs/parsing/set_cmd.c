@@ -16,10 +16,6 @@ t_cmd	close_cmd(t_cmd cmd, t_token *token)
 {
 	if (token->type == pipeline)
 		cmd.pipe_o = 1;
-	if (token->type == and)
-		cmd.pipe_o = 2;
-	if (token->type == or)
-		cmd.pipe_o = 3;
 	if (cmd.fd_i == -1 || cmd.fd_o == -1)
 		cmd.f_redir = 1;
 	return (cmd);
