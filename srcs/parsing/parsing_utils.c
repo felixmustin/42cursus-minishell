@@ -1,27 +1,27 @@
 #include "../../includes/minishell.h"
 
-void init_struct(t_cmd *cmd)
+void	init_struct(t_cmd *cmd)
 {
-    cmd->fd_i = 0;
-    cmd->fd_o = 1;
-    cmd->pipe_i = 0;
-    cmd->pipe_o = 0;
-    cmd->type = -1;
-    cmd->f_redir = 0;
+	cmd->fd_i = 0;
+	cmd->fd_o = 1;
+	cmd->pipe_i = 0;
+	cmd->pipe_o = 0;
+	cmd->type = -1;
+	cmd->f_redir = 0;
 }
 
-int count_cmd(t_lists *lst)
+int	count_cmd(t_lists *lst)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while(lst)
-    {
-        if (lst->token->type == pipeline)
-            i++;
-        lst = lst->next;
-    }
-    return (i + 1);
+	i = 0;
+	while (lst)
+	{
+		if (lst->token->type == pipeline)
+			i++;
+		lst = lst->next;
+	}
+	return (i + 1);
 }
 
 int get_type(char **str)
@@ -44,7 +44,7 @@ int get_type(char **str)
         return (0);
 }
 
-int print_syntax_error(char *str, int i)
+int	print_syntax_error(char *str, int i)
 {
 	if (ft_strncmp(str, "\n", 1) == 0)
 		printf("minishell: syntax error near unexpected token `newline'\n");
@@ -53,8 +53,8 @@ int print_syntax_error(char *str, int i)
 	return (0);
 }
 
-void ft_free(char *str)
+void	ft_free(char *str)
 {
-    free(str);
-    str = NULL;
+	free(str);
+	str = NULL;
 }

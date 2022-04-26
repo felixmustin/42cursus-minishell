@@ -3,7 +3,6 @@ SRCS	=	srcs/main.c \
 			srcs/prompt.c \
 			srcs/env.c \
 			srcs/signal.c \
-			srcs/sig_code.c \
 			srcs/builtins/exec_cd.c \
 			srcs/builtins/exec_echo.c \
 			srcs/builtins/exec_env.c \
@@ -34,7 +33,6 @@ SRCS	=	srcs/main.c \
 			srcs/token/check_variable.c \
 			srcs/token/delete_quotes.c \
 			srcs/token/set_variable.c \
-			srcs/token/token_utils.c \
 			get_next_line/get_next_line.c \
 
 INCL		= includes/minishell.h
@@ -43,15 +41,15 @@ NAME		= minishell
 LIBFT_DIR	= libft/
 LIBFT		= ${LIBFT_DIR}libft.a
 CC			= gcc
-CCFLAGS		= -Wall -Wextra -Werror -I${INCL} -I${LIBFT_DIR} -fsanitize=address -g
+CCFLAGS		= -Wall -Wextra -Werror -I ${INCL} -I ${LIBFT_DIR} #-fsanitize=address
 
 %.o: %.c
-	$(CC) $(CCFLAGS) -I/usr/local/opt/readline/include -c $< -o $@
+	$(CC) $(CCFLAGS) -I/Users/$(USER)/.brew/opt/readline/include -c $< -o $@
 
 all:	${LIBFT} ${INCL} ${NAME}
 
 ${NAME}:	${OBJS} ${INCL}
-					$(CC) $(CCFLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline -L/usr/local/opt/readline/lib
+					$(CC) $(CCFLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline -L /Users/$(USER)/.brew/opt/readline/lib
 
 ${LIBFT}:
 			@make -C./libft

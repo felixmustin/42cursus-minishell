@@ -37,6 +37,7 @@ int unclosed_operator(char **input)
 	char *line;
 
 	input_signals();
+	set_sig_code(0);
 	content = ft_strdup("\n");
 	ft_putstr("pipe>");
     line = get_next_line(0);
