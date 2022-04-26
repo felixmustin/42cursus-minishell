@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmustin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/26 14:43:45 by fmustin           #+#    #+#             */
+/*   Updated: 2022/04/26 14:43:46 by fmustin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	single_token(t_lists *lst)
@@ -15,7 +27,9 @@ int	single_token(t_lists *lst)
 		i++;
 	}
 	if (i == 1)
-		if (type != literal && type != double_redir_left && type != double_redir_right && type != simple_redir_left && type != simple_redir_right)
+		if (type != literal && type != double_redir_left
+			&& type != double_redir_right
+			&& type != simple_redir_left && type != simple_redir_right)
 			return (0);
 	return (1);
 }

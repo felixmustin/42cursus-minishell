@@ -19,6 +19,7 @@ SRCS	=	srcs/main.c \
 			srcs/parsing/check_quotes.c \
 			srcs/parsing/check_quotes_op.c \
 			srcs/parsing/parse_command.c \
+			srcs/parsing/parse_command_2.c \
 			srcs/parsing/parse_redir.c \
 			srcs/parsing/parsing_utils.c \
 			srcs/parsing/parsing.c \

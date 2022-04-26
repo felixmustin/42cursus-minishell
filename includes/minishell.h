@@ -89,6 +89,7 @@ void	free_env(char **envv);
 int		env_len(char **envv);
 char	*new_prompt(void);
 //parsing
+int     check_quote_occurence(char *str, int i);
 int		check_quotes_op(char **input);
 int		unclosed_quotes(char **input);
 int		check_operator(char **input, int i);
@@ -97,6 +98,8 @@ int		parse_command(t_lists *lst);
 int		set_cmd(t_all_cmd *all_cmd, t_lists *lst);
 int		parsing(t_all_cmd *all_cmd, char **input, t_lists **lst);
 void	free_cmds(t_all_cmd *all_cmd);
+int     check_acces(char **str);
+int     check_env(char *str);
 //parsing_utils
 void	init_struct(t_cmd *cmd);
 int		count_cmd(t_lists *lst);
@@ -159,7 +162,5 @@ void	cmd_signals(int i);
 void	input_signals(void);
 void    set_sig_code(int err_code);
 int get_sig_code(void);
-
-char	*split_to_str(char **split);
 
 #endif
