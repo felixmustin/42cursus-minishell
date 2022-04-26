@@ -12,26 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-int	set_path_2(char **path, char **cmd)
-{
-	int	i;
-
-	i = check_acces(path);
-	if (i == -1)
-	{
-		free_env(path);
-		return (0);
-	}
-	ft_free(*cmd);
-	*cmd = ft_strdup(path[i]);
-	free_env(path);
-	return (1);
-}
-
 int	set_path(char **cmd)
 {
 	int		i;
-	char	**path;
 	char	**tpm;
 	char	*str;
 
@@ -45,21 +28,14 @@ int	set_path(char **cmd)
 		return (0);
 	while (tpm[i])
 		i++;
-	path = malloc(sizeof(char *) * (i + 1));
-	if (!path)
-		return (0);
-	i = -1;
-	while (tpm[++i])
-		path[i] = ft_strjoin(tpm[i], *cmd);
-	path[i] = NULL;
-	return (set_path_2(path, cmd));
+	free(str);
+	return (set_path_2(cmd, tpm, i));
 }
 
 int	check_cmd(t_token *token)
 {
 	char	*tpm;
 	char	*cmd;
-	char	*str;
 	int		i;
 
 	i = 0;
@@ -73,13 +49,8 @@ int	check_cmd(t_token *token)
 		return (0);
 	tpm = ft_substr(token->content, 0, i);
 	cmd = ft_strjoin("/", tpm);
-	if (!set_path(&cmd))
-		return (0);
-	str = ft_substr(token->content, i, ft_strlen(token->content));
-	free(token->content);
-	token->content = NULL;
-	token->content = ft_strjoin(cmd, str);
-	return (1);
+	free(tpm);
+	return (check_cmd_2(&cmd, token, i));
 }
 
 int	check_builtins(t_token *token)

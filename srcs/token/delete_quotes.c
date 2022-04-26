@@ -46,6 +46,7 @@ int	delete_double_quotes(t_token *token)
 	free(token->content);
 	token->content = NULL;
 	token->content = split_to_str(tpm);
+	free_env(tpm);
 	return (0);
 }
 
@@ -62,6 +63,7 @@ int	delete_single_quotes(t_token *token)
 	free(token->content);
 	token->content = NULL;
 	token->content = split_to_str(tpm);
+	free_env(tpm);
 	return (0);
 }
 
