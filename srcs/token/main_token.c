@@ -12,6 +12,14 @@
 
 #include "../../includes/minishell.h"
 
+void	print_token(t_lists *lst)
+{
+	while (lst)
+	{
+		printf("content : %s\n", lst->token->content);
+		lst = lst->next;
+	}
+}
 
 int	main_token(char *input, t_lists **lst)
 {
@@ -23,5 +31,6 @@ int	main_token(char *input, t_lists **lst)
 	delete_quotes(lst);
 	if (!third_token(lst))
 		return (0);
+	//print_token(*lst);
 	return (1);
 }

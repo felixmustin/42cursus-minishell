@@ -31,6 +31,7 @@ char	*new_content_literal(t_lists **lst)
 			content = fill_content_literal(content, lst, split);
 		*lst = (*lst)->next;
 	}
+	free(split);
 	return (content);
 }
 
@@ -97,10 +98,13 @@ void	set_third_token(t_lists **lst, t_lists **newlist)
 int	third_token(t_lists **lst)
 {
 	t_lists	*new;
+	t_lists	*tmp;
 
+	tmp = *lst;
 	new = NULL;
 	while (*lst)
 		set_third_token(lst, &new);
+	*lst = tmp;
 	free_lst(lst);
 	*lst = first_lst(new);
 	return (1);

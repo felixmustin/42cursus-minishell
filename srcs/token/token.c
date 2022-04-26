@@ -56,8 +56,9 @@ t_token	*create_token(char *content, t_token_type type)
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->content = content;
+	token->content = ft_strdup(content);
 	token->type = type;
+	free(content);
 	return (token);
 }
 

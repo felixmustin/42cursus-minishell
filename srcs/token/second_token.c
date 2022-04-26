@@ -100,10 +100,13 @@ int	set_second_token(t_lists **lst, t_lists **newlist)
 int	second_token(t_lists **lst)
 {
 	t_lists	*new;
+	t_lists	*tmp;
 
 	new = NULL;
+	tmp = *lst;
 	while (*lst)
 		set_second_token(lst, &new);
+	*lst = tmp;
 	free_lst(lst);
 	*lst = first_lst(new);
 	return (1);

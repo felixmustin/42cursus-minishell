@@ -63,10 +63,13 @@ int	set_content(t_lists **lst, t_lists **newlist)
 int	set_variable(t_lists **lst)
 {
 	t_lists	*new;
+	t_lists	*tmp;
 
 	new = NULL;
+	tmp = *lst;
 	while (*lst)
 		set_content(lst, &new);
+	*lst = tmp;
 	free_lst(lst);
 	*lst = first_lst(new);
 	return (0);
