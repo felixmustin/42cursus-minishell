@@ -43,21 +43,21 @@ int	search_variable(char **str)
 	if (ft_strlen(*str) == 1)
 		return (0);
 	tpm = ft_substr(*str, 1, ft_strlen(*str));
-	while (env[i] && ft_strncmp(tpm, env[i], ft_strlen(tpm)) != 0)
+	while (g_env[i] && ft_strncmp(tpm, g_env[i], ft_strlen(tpm)) != 0)
 		i++;
 	free(*str);
-	if (!env[i])
+	if (!g_env[i])
 	{
 		*str = ft_strdup("");
 		return (0);
 	}
 	j = 0;
-	while (env[i][j] != '=')
+	while (g_env[i][j] != '=')
 		j++;
 	if (j != ft_strlen(tpm))
 		*str = ft_strdup("");
 	else
-		*str = ft_substr(env[i], j + 1, ft_strlen(env[i]));
+		*str = ft_substr(g_env[i], j + 1, ft_strlen(g_env[i]));
 	free(tpm);
 	return (1);
 }

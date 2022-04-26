@@ -76,6 +76,6 @@ int	main(int argc, char **argv, char **envv)
 			cmd_signals(0);
 			input = readline(cwd);
 		}
-		free_env(env);
+		free_env(g_env);
 	}
 }

@@ -43,12 +43,12 @@ void	init_env(char **envv)
 {
 	int	i;
 
-	env = malloc(sizeof(char *) * (env_len(envv) + 1));
+	g_env = malloc(sizeof(char *) * (env_len(envv) + 1));
 	i = 0;
 	while (envv[i])
 	{
-		env[i] = ft_strdup(envv[i]);
+		g_env[i] = ft_strdup(envv[i]);
 		i++;
 	}
-	env[i] = 0;
+	g_env[i] = 0;
 }

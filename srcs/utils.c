@@ -44,7 +44,7 @@ void	exit_with_free(t_all_cmd *all_cmd, int val)
 {
 	if (!(all_cmd->nbrcmd == 1 && all_cmd->cmds[0].type > 0))
 		free(all_cmd->pids);
-	free_env(env);
+	free_env(g_env);
 	free_cmds(all_cmd);
 	exit(val);
 }

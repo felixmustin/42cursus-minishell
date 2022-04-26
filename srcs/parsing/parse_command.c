@@ -36,9 +36,9 @@ int	set_path(char **cmd)
 	char	*str;
 
 	i = 0;
-	while (env[i] && !check_env(env[i]))
+	while (g_env[i] && !check_env(g_env[i]))
 		i++;
-	str = ft_substr(env[i], 5, ft_strlen(env[i]));
+	str = ft_substr(g_env[i], 5, ft_strlen(g_env[i]));
 	tpm = ft_split(str, ':');
 	i = 0;
 	if (!tpm)

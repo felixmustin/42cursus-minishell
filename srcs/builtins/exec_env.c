@@ -23,9 +23,9 @@ void	ex_env(t_all_cmd *all_cmd, int j)
 		return ;
 	}
 	i = 0;
-	while (env[++i])
+	while (g_env[++i])
 	{
-		ft_putstr(env[i]);
+		ft_putstr(g_env[i]);
 		ft_putstr("\n");
 	}
 }

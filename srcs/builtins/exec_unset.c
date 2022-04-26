@@ -26,15 +26,15 @@ void	init_env_suppr(char *str, char **tmp_env)
 		if (ft_strncmp(tmp_env[j], str, len) != 0)
 			i++;
 	}
-	env = malloc(sizeof(char *) * (env_len(tmp_env) + i));
+	g_env = malloc(sizeof(char *) * (env_len(tmp_env) + i));
 	i = -1;
 	j = -1;
 	while (tmp_env[++i])
 	{
 		if (ft_strncmp(tmp_env[i], str, len) != 0)
-			env[++j] = ft_strdup(tmp_env[i]);
+			g_env[++j] = ft_strdup(tmp_env[i]);
 	}
-	env[++j] = 0;
+	g_env[++j] = 0;
 }
 
 int	check_if_vals(char *str)
@@ -98,7 +98,7 @@ void	ex_unset(t_all_cmd *all_cmd, int j)
 		if (check_if_vals(all_cmd->cmds[j].cmd[i]))
 		{
 			tmp_env = dup_env();
-			free_env(env);
+			free_env(g_env);
 			init_env_suppr(all_cmd->cmds[j].cmd[i], tmp_env);
 			free_env(tmp_env);
 		}

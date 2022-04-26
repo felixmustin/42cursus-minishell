@@ -25,10 +25,10 @@ int	check_if_exist(char *str, int j)
 	k = 0;
 	while (k < j)
 	{
-		if (!ft_strncmp(env[k], cut_str, i + 1))
+		if (!ft_strncmp(g_env[k], cut_str, i + 1))
 		{
-			free(env[k]);
-			env[k] = ft_strdup(str);
+			free(g_env[k]);
+			g_env[k] = ft_strdup(str);
 			return (0);
 		}
 		k++;
@@ -62,12 +62,12 @@ char	**dup_env(void)
 	int			len;
 	int			i;
 
-	len = env_len(env);
+	len = env_len(g_env);
 	tmp_env = malloc(sizeof(char *) * (len + 1));
 	i = 0;
 	while (i < len)
 	{
-		tmp_env[i] = ft_strdup(env[i]);
+		tmp_env[i] = ft_strdup(g_env[i]);
 		i++;
 	}
 	tmp_env[i] = 0;
@@ -87,20 +87,20 @@ void	init_env_add(t_all_cmd *all_cmd, int k, char **tmp_env)
 		if (check_if_val(all_cmd, k, i, 1))
 			len++;
 	}
-	env = malloc(sizeof(char *) * (env_len(tmp_env) + len));
+	g_env = malloc(sizeof(char *) * (env_len(tmp_env) + len));
 	i = -1;
 	while (tmp_env[++i])
-		env[i] = ft_strdup(tmp_env[i]);
+		g_env[i] = ft_strdup(tmp_env[i]);
 	j = 0;
 	while (all_cmd->cmds[k].cmd[++j])
 	{
 		if (check_if_val(all_cmd, k, j, 0))
 		{
 			if (check_if_exist(all_cmd->cmds[k].cmd[j], i))
-				env[i++] = ft_strdup(all_cmd->cmds[k].cmd[j]);
+				g_env[i++] = ft_strdup(all_cmd->cmds[k].cmd[j]);
 		}
 	}
-	env[i] = 0;
+	g_env[i] = 0;
 }
 
 void	ex_export(t_all_cmd *all_cmd, int j)
@@ -113,13 +113,13 @@ void	ex_export(t_all_cmd *all_cmd, int j)
 	if (!all_cmd->cmds[j].cmd[1])
 	{
 		i = 0;
-		while (env[++i])
-			printf("declare -x %s\n", env[i]);
+		while (g_env[++i])
+			printf("declare -x %s\n", g_env[i]);
 	}
 	else
 	{
 		tmp_env = dup_env();
-		free_env(env);
+		free_env(g_env);
 		init_env_add(all_cmd, j, tmp_env);
 		free_env(tmp_env);
 	}

@@ -19,12 +19,12 @@ char	*get_home(void)
 	int		i;
 
 	i = -1;
-	while (env[++i])
+	while (g_env[++i])
 	{
-		if (ft_strnstr(env[i], "HOME=", 5))
+		if (ft_strnstr(g_env[i], "HOME=", 5))
 		{
-			len = ft_strlen(env[i]);
-			home = ft_substr(env[i], 5, len - 5);
+			len = ft_strlen(g_env[i]);
+			home = ft_substr(g_env[i], 5, len - 5);
 		}
 	}
 	return (home);
@@ -35,19 +35,19 @@ void	set_env(char *type, char *pwd)
 	int	i;
 
 	i = -1;
-	while (env[++i])
+	while (g_env[++i])
 	{
-		if (ft_strnstr(env[i], "PWD=", 4) && !ft_strncmp("PWD", type, 3))
+		if (ft_strnstr(g_env[i], "PWD=", 4) && !ft_strncmp("PWD", type, 3))
 		{
-			free(env[i]);
-			env[i] = NULL;
+			free(g_env[i]);
+			g_env[i] = NULL;
 			ft_strjoin("PWD=", pwd);
 		}
-		else if (ft_strnstr(env[i], "OLDPWD=", 7
+		else if (ft_strnstr(g_env[i], "OLDPWD=", 7
 				&& !ft_strncmp("OLDPWD", type, 6)))
 		{
-			free(env[i]);
-			env[i] = NULL;
+			free(g_env[i]);
+			g_env[i] = NULL;
 			ft_strjoin("OLDPWD=", pwd);
 		}
 	}

@@ -52,7 +52,7 @@ void	execute_child_cmd(t_all_cmd *all_cmd, int i)
 	if (all_cmd->cmds[i].type > 0)
 		execute_builtin(all_cmd, i);
 	if (all_cmd->cmds[i].type == 0)
-		execve(all_cmd->cmds[i].cmd[0], all_cmd->cmds[i].cmd, env);
+		execve(all_cmd->cmds[i].cmd[0], all_cmd->cmds[i].cmd, g_env);
 	exit_with_free(all_cmd, errno);
 }
 
