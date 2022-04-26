@@ -41,14 +41,15 @@ void	set_env(char *type, char *pwd)
 		{
 			free(g_env[i]);
 			g_env[i] = NULL;
-			ft_strjoin("PWD=", pwd);
+			g_env[i] = ft_strjoin("PWD=", pwd);
+			
 		}
 		else if (ft_strnstr(g_env[i], "OLDPWD=", 7
 				&& !ft_strncmp("OLDPWD", type, 6)))
 		{
 			free(g_env[i]);
 			g_env[i] = NULL;
-			ft_strjoin("OLDPWD=", pwd);
+			g_env[i] = ft_strjoin("OLDPWD=", pwd);
 		}
 	}
 }
