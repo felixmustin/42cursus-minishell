@@ -48,6 +48,7 @@ void	main_exec(char **input, t_lists **lst)
 		{
 			execute(&all_cmd);
 			set_sig_code(all_cmd.status);
+			ft_putstr("ICI0");
 			free_cmds(&all_cmd);
 		}
 		free_lst(lst);

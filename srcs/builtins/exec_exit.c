@@ -53,6 +53,15 @@ int	ft_atoi_dif(const char *str)
 	return (new);
 }
 
+void	exit_with_free(t_all_cmd *all_cmd, int val)
+{
+	if (all_cmd->pids)
+		free(all_cmd->pids);
+	free_env(env);
+	free_cmds(all_cmd);
+	exit(val);
+}
+
 void	check_valid_exit(t_all_cmd *all_cmd, int i, int j)
 {
 	if (!ft_isdigit(all_cmd->cmds[i].cmd[1][j]))
@@ -60,7 +69,7 @@ void	check_valid_exit(t_all_cmd *all_cmd, int i, int j)
 		all_cmd->status = 255;
 		printf("minishell: exit: %s: numeric argument required\n",
 			all_cmd->cmds[i].cmd[1]);
-		exit(255);
+		exit_with_free(all_cmd, 255);
 	}
 }
 
@@ -80,8 +89,8 @@ void	ex_exit(t_all_cmd *all_cmd, int i)
 			printf("minishell: exit: too many arguments\n");
 		}
 		else
-			exit(ft_atoi_dif(all_cmd->cmds[i].cmd[1]));
+			exit_with_free(all_cmd, ft_atoi_dif(all_cmd->cmds[i].cmd[1]));
 	}
 	else
-		exit(0);
+		exit_with_free(all_cmd, 0);
 }

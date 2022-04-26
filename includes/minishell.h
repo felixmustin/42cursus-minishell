@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#include "../wraloc.h"
 #include <sys/ioctl.h>
 #include <termios.h> 
 #include <stdio.h>
@@ -146,6 +147,7 @@ void    exit_cmds(t_all_cmd *all_cmd, int i);
 void	wait_pid(t_all_cmd *all_cmd, int i);
 void	close_fd(t_all_cmd *all_cmd);
 //builtins
+void	exit_with_free(t_all_cmd *all_cmd, int val);
 void    ex_exit(t_all_cmd *all_cmd, int i);
 void    ex_echo(t_all_cmd *all_cmd, int i);
 void    ex_cd(t_all_cmd *all_cmd, int i);
