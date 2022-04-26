@@ -53,15 +53,6 @@ int	ft_atoi_dif(const char *str)
 	return (new);
 }
 
-void	exit_with_free(t_all_cmd *all_cmd, int val)
-{
-	if (all_cmd->nbrcmd > 1)
-		free(all_cmd->pids);
-	free_env(env);
-	free_cmds(all_cmd);
-	exit(val);
-}
-
 void	check_valid_exit(t_all_cmd *all_cmd, int i, int j)
 {
 	if (!ft_isdigit(all_cmd->cmds[i].cmd[1][j]))

@@ -39,3 +39,16 @@ int	get_sig_code(void)
 {
 	return (sig_code_static(0, false));
 }
+
+void	exit_with_free(t_all_cmd *all_cmd, int val)
+{
+	ft_putstr("okokok");
+	if (!(all_cmd->nbrcmd == 1 && all_cmd->cmds[0].type > 0))
+	{
+		ft_putstr("OUEOUEOEU");
+		free(all_cmd->pids);
+	}
+	free_env(env);
+	free_cmds(all_cmd);
+	exit(val);
+}
