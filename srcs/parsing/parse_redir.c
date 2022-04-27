@@ -22,9 +22,12 @@ int	get_redir_l(t_token *token)
 	return (fd);
 }
 
-int	close_dl_input(int fd)
+int	close_dl_input(char **line, int fd, int i)
 {
 	close(fd);
+	free(*line);
+	if (i == 0)
+		return (-1);
 	fd = open("heredoc", O_RDWR);
 	return (fd);
 }
@@ -46,7 +49,7 @@ int	get_redir_dl(t_token *token)
 	while (line)
 	{
 		if (get_sig_code())
-			return (close(fd) - 1);
+			return (close_dl_input(&line, fd, 0));
 		if (!strncmp(line, token->content, size))
 			break ;
 		ft_putstr("heredoc>");
@@ -54,8 +57,7 @@ int	get_redir_dl(t_token *token)
 		free(line);
 		line = get_next_line(0);
 	}
-	free(line);
-	return (close_dl_input(fd));
+	return (close_dl_input(&line, fd, 1));
 }
 
 int	get_redir_r(t_token *token)

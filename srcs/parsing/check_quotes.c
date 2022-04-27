@@ -26,17 +26,23 @@ int	check_quote_occurence(char *str, int i)
 	return (-1);
 }
 
-int	close_quotes(char **input, char *content)
+int	close_quotes(char **input, char *content, char *line, int i)
 {
 	char	*tmp;
 
-	tmp = ft_strdup(*input);
-	free(*input);
-	*input = NULL;
-	*input = ft_strjoin(tmp, content);
-	if (!*input)
+	if (i == 1)
+	{
+		tmp = ft_strdup(*input);
+		ft_free(*input);
+		*input = ft_strjoin(tmp, content);
+		if (!*input)
+			return (0);
+		free(tmp);
+	}
+	free(content);
+	free(line);
+	if (i == 0)
 		return (0);
-	free(tmp);
 	return (1);
 }
 
@@ -72,17 +78,16 @@ int	unclosed_quotes(char **input)
 	while (line)
 	{
 		if (get_sig_code())
-			return (0);
+			return (close_quotes(input, content, line, 0));
 		tmp = ft_strdup(content);
 		ft_free(content);
 		content = ft_strjoin(tmp, line);
 		ft_free(tmp);
 		if (check_closed_quote(line))
-			return (close_quotes(input, content));
+			return (close_quotes(input, content, line, 1));
 		ft_putstr("quote>");
 		ft_free(line);
 		line = get_next_line(0);
 	}
-	ft_free(line);
-	return (close_quotes(input, content));
+	return (close_quotes(input, content, line, 1));
 }

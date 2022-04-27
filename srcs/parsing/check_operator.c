@@ -12,17 +12,24 @@
 
 #include "../../includes/minishell.h"
 
-int	close_op(char **input, char *content)
+int	close_op(char **input, char *content, char *line, int i)
 {
 	char	*tmp;
 
-	tmp = ft_strdup(*input);
-	free(*input);
-	*input = NULL;
-	*input = ft_strjoin(tmp, content);
-	if (!*input)
+	if (i == 1)
+	{
+		tmp = ft_strdup(*input);
+		free(*input);
+		*input = NULL;
+		*input = ft_strjoin(tmp, content);
+		if (!*input)
+			return (0);
+		free(tmp);
+	}
+	free(content);
+	free(line);
+	if (i == 0)
 		return (0);
-	free(tmp);
 	return (1);
 }
 
@@ -56,17 +63,16 @@ int	unclosed_operator(char **input)
 	while (line)
 	{
 		if (get_sig_code())
-			return (0);
+			return (close_op(input, content, line, 0));
 		tmp = ft_strdup(content);
 		ft_free(content);
 		content = ft_strjoin(tmp, line);
 		ft_free(tmp);
 		if (check_closed_op(line))
-			return (close_op(input, content));
+			return (close_op(input, content, line, 1));
 		ft_putstr("pipe>");
 		ft_free(line);
 		line = get_next_line(0);
 	}
-	ft_free(line);
-	return (close_op(input, content));
+	return (close_op(input, content, line, 1));
 }
