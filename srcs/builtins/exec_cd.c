@@ -53,10 +53,12 @@ void	set_env(char *type, char *pwd)
 	}
 }
 
-void	exit_cd(t_all_cmd *all_cmd, int i)
+void	exit_cd(t_all_cmd *all_cmd, char *new, char *old, int i)
 {
 	char	*str;
 
+	free(new);
+	free(old);
 	str = ft_strjoin("minishell: cd: ", all_cmd->cmds[i].cmd[1]);
 	all_cmd->status = 1;
 	perror(str);
@@ -81,7 +83,7 @@ void	ex_cd(t_all_cmd *all_cmd, int i)
 		new_pwd = getcwd(NULL, 0);
 	}
 	if (ret == -1)
-		return (exit_cd(all_cmd, i));
+		return (exit_cd(all_cmd, new_pwd, old_pwd, i));
 	set_env("PWD", new_pwd);
 	set_env("OLDPWD", old_pwd);
 	free(old_pwd);
