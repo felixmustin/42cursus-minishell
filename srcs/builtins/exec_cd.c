@@ -43,8 +43,8 @@ void	set_env(char *type, char *pwd)
 			g_env[i] = NULL;
 			g_env[i] = ft_strjoin("PWD=", pwd);
 		}
-		else if (ft_strnstr(g_env[i], "OLDPWD=", 7
-				&& !ft_strncmp("OLDPWD", type, 6)))
+		else if (ft_strnstr(g_env[i], "OLDPWD=", 7)
+			&& !ft_strncmp("OLDPWD", type, 6))
 		{
 			free(g_env[i]);
 			g_env[i] = NULL;
