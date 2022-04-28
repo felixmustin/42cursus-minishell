@@ -39,8 +39,8 @@ int	delete_double_quotes(t_token *token)
 
 	if (ft_strlen(token->content) == 2)
 	{
-		token->type = undesirable;
-		return (0);
+		free(token->content);
+		token->content = set_split(-2);
 	}
 	tpm = ft_split(token->content, 34);
 	free(token->content);
@@ -56,7 +56,8 @@ int	delete_single_quotes(t_token *token)
 
 	if (ft_strlen(token->content) == 2)
 	{
-		token->type = undesirable;
+		free(token->content);
+		token->content = set_split(-2);
 		return (0);
 	}
 	tpm = ft_split(token->content, 39);
