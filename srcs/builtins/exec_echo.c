@@ -42,6 +42,8 @@ void	ex_echo(t_all_cmd *all_cmd, int j)
 		else
 			exec_echo_2(all_cmd, i - 1, j);
 	}
+	else
+		ft_putstr("\n");
 	all_cmd->status = 0;
 	return ;
 }
