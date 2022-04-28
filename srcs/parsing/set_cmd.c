@@ -21,31 +21,27 @@ t_cmd	close_cmd(t_cmd cmd, t_token *token)
 	return (cmd);
 }
 
-int	check_split(char **str)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i] != NULL)
-	{
-		if (str[i][0] == -2)
-		{
-			free(str[i]);
-			str[i] = ft_strdup("");
-		}
-		i++;
-	}
-	return (0);
-}
-
 void	create_cmd(t_cmd *full_cmd, char *str)
 {
+	int		i;
+	int		j;
 	char	**new;
 
 	new = ft_split(str, -1);
-	check_split(new);
+	i = 0;
+	j = 0;
+	while (new[i] != NULL)
+	{
+		if (ft_strlen(new[i]) == 1)
+		{
+			if (new[i][0] == -2)
+			{
+				free(new[i]);
+				new[i] = ft_strdup("");
+			}
+		}
+		i++;
+	}
 	full_cmd->type = get_type(new);
 	full_cmd->cmd = new;
 }

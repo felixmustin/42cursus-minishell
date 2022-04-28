@@ -31,6 +31,5 @@ int	main_token(char *input, t_lists **lst)
 	delete_quotes(lst);
 	if (!third_token(lst))
 		return (0);
-	//print_token(*lst);
 	return (1);
 }

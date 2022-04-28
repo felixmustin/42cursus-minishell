@@ -35,7 +35,7 @@ char	*split_to_str(char **split)
 
 int	check_empty_quotes(t_lists *lst)
 {
-	t_lists *prev;
+	t_lists	*prev;
 	t_lists	*next;
 
 	prev = lst->prev;
