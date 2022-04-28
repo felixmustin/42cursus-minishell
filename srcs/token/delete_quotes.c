@@ -33,38 +33,69 @@ char	*split_to_str(char **split)
 	return (str);
 }
 
-int	delete_double_quotes(t_token *token)
+int	check_empty_quotes(t_lists *lst)
 {
-	char	**tpm;
+	t_lists *prev;
+	t_lists	*next;
 
-	if (ft_strlen(token->content) == 2)
+	prev = lst->prev;
+	next = lst->next;
+	if (next)
 	{
-		free(token->content);
-		token->content = set_split(-2);
+		if (next->token->type != space)
+			return (0);
 	}
-	tpm = ft_split(token->content, 34);
-	free(token->content);
-	token->content = NULL;
-	token->content = split_to_str(tpm);
-	free_env(tpm);
+	if (prev)
+	{
+		if (prev->token->type != space)
+			return (0);
+	}
+	return (1);
+}
+
+int	delete_double_quotes(t_lists **lst)
+{
+	char	**split;
+
+	if (ft_strlen((*lst)->token->content) == 2)
+	{
+		if (check_empty_quotes(*lst))
+		{
+			free((*lst)->token->content);
+			(*lst)->token->content = set_split(-2);
+		}
+		else
+			(*lst)->token->type = undesirable;
+		return (0);
+	}
+	split = ft_split((*lst)->token->content, 34);
+	free((*lst)->token->content);
+	(*lst)->token->content = NULL;
+	(*lst)->token->content = split_to_str(split);
+	free_env(split);
 	return (0);
 }
 
-int	delete_single_quotes(t_token *token)
+int	delete_single_quotes(t_lists **lst)
 {
-	char	**tpm;
+	char	**split;
 
-	if (ft_strlen(token->content) == 2)
+	if (ft_strlen((*lst)->token->content) == 2)
 	{
-		free(token->content);
-		token->content = set_split(-2);
+		if (check_empty_quotes(*lst))
+		{
+			free((*lst)->token->content);
+			(*lst)->token->content = set_split(-2);
+		}
+		else
+			(*lst)->token->type = undesirable;
 		return (0);
 	}
-	tpm = ft_split(token->content, 39);
-	free(token->content);
-	token->content = NULL;
-	token->content = split_to_str(tpm);
-	free_env(tpm);
+	split = ft_split((*lst)->token->content, 39);
+	free((*lst)->token->content);
+	(*lst)->token->content = NULL;
+	(*lst)->token->content = split_to_str(split);
+	free_env(split);
 	return (0);
 }
 
@@ -76,9 +107,9 @@ int	delete_quotes(t_lists **lst)
 	while (*lst)
 	{
 		if ((*lst)->token->type == double_quote)
-			delete_double_quotes((*lst)->token);
+			delete_double_quotes(lst);
 		if ((*lst)->token->type == single_quote)
-			delete_single_quotes((*lst)->token);
+			delete_single_quotes(lst);
 		*lst = (*lst)->next;
 	}
 	*lst = tpm;
