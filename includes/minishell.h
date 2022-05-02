@@ -6,14 +6,13 @@
 /*   By: cmillet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 16:07:28 by cmillet           #+#    #+#             */
-/*   Updated: 2022/04/26 16:07:30 by cmillet          ###   ########.fr       */
+/*   Updated: 2022/05/02 11:48:47 by fmustin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-//#include "../wraloc.h"
 # include <sys/ioctl.h>
 # include <termios.h> 
 # include <stdio.h>
@@ -108,10 +107,10 @@ int				unclosed_quotes(char **input);
 int				check_operator(char **input, int i);
 int				unclosed_operator(char **input);
 int				parse_command(t_lists *lst);
-int set_path(char **cmd);
-int set_path_2(char **cmd, char **tpm, int i);
-int check_cmd_2(char **cmd, t_token *token, int i);
-int				set_cmd(t_all_cmd *all_cmd, t_lists *lst);
+int				set_path(char **cmd);
+int				set_path_2(char **cmd, char **tpm, int i);
+int				check_cmd_2(char **cmd, t_token *token, int i);
+int				set_cmd(t_all_cmd *all_cmd, t_lists *lst, int k);
 int				parsing(t_all_cmd *all_cmd, char **input, t_lists **lst);
 void			free_cmds(t_all_cmd *all_cmd);
 int				check_acces(char **str);

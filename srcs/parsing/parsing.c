@@ -36,6 +36,9 @@ int	single_token(t_lists *lst)
 
 int	parsing(t_all_cmd *all_cmd, char **input, t_lists **lst)
 {
+	int	i;
+
+	i = 0;
 	if (!check_quotes_op(input))
 		return (0);
 	if (!main_token(*input, lst))
@@ -44,7 +47,7 @@ int	parsing(t_all_cmd *all_cmd, char **input, t_lists **lst)
 		return (0);
 	if (!parse_command(*lst))
 		return (0);
-	if (!set_cmd(all_cmd, *lst))
+	if (!set_cmd(all_cmd, *lst, i))
 	{
 		free_cmds(all_cmd);
 		return (0);

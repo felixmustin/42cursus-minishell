@@ -12,15 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-void	print_token(t_lists *lst)
-{
-	while (lst)
-	{
-		printf("content : %s\n", lst->token->content);
-		lst = lst->next;
-	}
-}
-
 int	main_token(char *input, t_lists **lst)
 {
 	if (!token(input, lst))

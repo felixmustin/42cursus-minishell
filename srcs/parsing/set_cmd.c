@@ -21,12 +21,14 @@ t_cmd	close_cmd(t_cmd cmd, t_token *token)
 	return (cmd);
 }
 
-void	create_cmd(t_cmd *full_cmd, char *str)
+void	create_cmd(t_cmd *full_cmd, char *str, int k)
 {
-	int		i;
-	int		j;
-	char	**new;
+	int			i;
+	int			j;
+	char		**new;
 
+	if (k > 0)
+		return ;
 	new = ft_split(str, -1);
 	i = 0;
 	j = 0;
@@ -63,7 +65,7 @@ t_lists	*move_lst(t_lists *lst, int i)
 	return (lst);
 }
 
-t_cmd	parse_cmds(t_lists *lst, int i)
+t_cmd	parse_cmds(t_lists *lst, int i, int k)
 {
 	t_cmd	full_cmd;
 
@@ -73,7 +75,7 @@ t_cmd	parse_cmds(t_lists *lst, int i)
 		lst = move_lst(lst, i);
 		i = 0;
 		if (lst->token->type == literal)
-			create_cmd(&full_cmd, lst->token->content);
+			create_cmd(&full_cmd, lst->token->content, k++);
 		else if (lst->token->type == simple_redir_right)
 			full_cmd.fd_o = get_redir_r(lst->token);
 		else if (lst->token->type == simple_redir_left)
@@ -90,7 +92,7 @@ t_cmd	parse_cmds(t_lists *lst, int i)
 	return (full_cmd);
 }
 
-int	set_cmd(t_all_cmd *all_cmd, t_lists *lst)
+int	set_cmd(t_all_cmd *all_cmd, t_lists *lst, int k)
 {
 	int	i;
 
@@ -101,7 +103,7 @@ int	set_cmd(t_all_cmd *all_cmd, t_lists *lst)
 	i = 0;
 	while (i < all_cmd->nbrcmd)
 	{
-		all_cmd->cmds[i] = parse_cmds(lst, i);
+		all_cmd->cmds[i] = parse_cmds(lst, i, k);
 		if (all_cmd->cmds[i].f_redir)
 			return (0);
 		if (i > 0)
